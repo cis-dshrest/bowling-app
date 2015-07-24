@@ -1,0 +1,9 @@
+# Ignoring binaries
+*.class
+
+# Package files
+*.jar
+*.war
+
+# Maven
+target/
