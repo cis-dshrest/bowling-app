@@ -1,5 +1,6 @@
 package com.explore.controller;
 
-public class HelpMessageController {
-
+public interface HelpMessageController {
+	
+	public String getHelpMessage(String pageName);
 }
