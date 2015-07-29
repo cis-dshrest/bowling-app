@@ -12,7 +12,7 @@ public class AboutController extends AbstractController {
 	protected ModelAndView handleRequestInternal(HttpServletRequest request,
 		HttpServletResponse response) throws Exception {
  
-		ModelAndView modelandview = new ModelAndView("AboutPage");
+		ModelAndView modelandview = new ModelAndView("about");
 		//modelandview.addObject("aboutMessage", "This will be the about page!");
 		
 		return modelandview;

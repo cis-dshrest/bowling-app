@@ -11,7 +11,7 @@ public class SignOutController extends AbstractController {
 	@Override
 	protected ModelAndView handleRequestInternal(HttpServletRequest arg0,
 			HttpServletResponse arg1) throws Exception {
-		ModelAndView mav = new ModelAndView("SignOutPage");
+		ModelAndView mav = new ModelAndView("signOut");
 		return mav;
 	}
 

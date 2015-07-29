@@ -11,7 +11,7 @@ public class ViewGameController extends AbstractController {
 	@Override
 	protected ModelAndView handleRequestInternal(HttpServletRequest arg0,
 			HttpServletResponse arg1) throws Exception {
-		ModelAndView mav = new ModelAndView("ViewGamePage");
+		ModelAndView mav = new ModelAndView("viewGame");
 		return mav;
 	}
 

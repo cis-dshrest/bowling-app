@@ -12,7 +12,7 @@ public class SignInController  extends AbstractController {
 	protected ModelAndView handleRequestInternal(HttpServletRequest arg0,
 			HttpServletResponse arg1) throws Exception {
 		
-		ModelAndView mav = new ModelAndView("SignInPage");
+		ModelAndView mav = new ModelAndView("signIn");
 
 		return mav;
 	}

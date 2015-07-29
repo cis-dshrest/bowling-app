@@ -12,13 +12,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import com.explore.controller.HelpMessageController;
+import com.explore.controller.HelpModuleController;
 import com.explore.model.HelpModule;
 
 public class HelpModuleTest {
 	
 	@Mock
-	HelpMessageController dao;
+	HelpModuleController dao;
 	
 
 	@Before
@@ -38,28 +38,28 @@ public class HelpModuleTest {
 		nameToHelpMessage.put("Sign Out", "This is the Sign Out page.");
 		nameToHelpMessage.put("View Game", "This is the View Game page.");
 		
-		dao = mock(HelpMessageController.class);
-		when(dao.getHelpMessage("Home")).thenReturn(nameToHelpMessage.get("Home"));
-		when(dao.getHelpMessage("About")).thenReturn(nameToHelpMessage.get("About"));
-		when(dao.getHelpMessage("Admin")).thenReturn(nameToHelpMessage.get("Admin"));
-		when(dao.getHelpMessage("New Game")).thenReturn(nameToHelpMessage.get("New Game"));
-		when(dao.getHelpMessage("Profile")).thenReturn(nameToHelpMessage.get("Profile"));
-		when(dao.getHelpMessage("Sign In")).thenReturn(nameToHelpMessage.get("Sign In"));
-		when(dao.getHelpMessage("Sign Out")).thenReturn(nameToHelpMessage.get("Sign Out"));
-		when(dao.getHelpMessage("View Game")).thenReturn(nameToHelpMessage.get("View Game"));
+		dao = mock(HelpModuleController.class);
+		when(dao.getInstructionalText("Home")).thenReturn(nameToHelpMessage.get("Home"));
+		when(dao.getInstructionalText("About")).thenReturn(nameToHelpMessage.get("About"));
+		when(dao.getInstructionalText("Admin")).thenReturn(nameToHelpMessage.get("Admin"));
+		when(dao.getInstructionalText("New Game")).thenReturn(nameToHelpMessage.get("New Game"));
+		when(dao.getInstructionalText("Profile")).thenReturn(nameToHelpMessage.get("Profile"));
+		when(dao.getInstructionalText("Sign In")).thenReturn(nameToHelpMessage.get("Sign In"));
+		when(dao.getInstructionalText("Sign Out")).thenReturn(nameToHelpMessage.get("Sign Out"));
+		when(dao.getInstructionalText("View Game")).thenReturn(nameToHelpMessage.get("View Game"));
 		
 	}
 	
 	@Test
-	public void getHelpMessage() {
-		assertEquals(dao.getHelpMessage("Home"), "This is the Home page.");
-		assertEquals(dao.getHelpMessage("About"), "This is the About page.");
-		assertEquals(dao.getHelpMessage("Admin"), "This is the Admin page.");
-		assertEquals(dao.getHelpMessage("New Game"), "This is the New Game page.");
-		assertEquals(dao.getHelpMessage("Profile"), "This is the Profile page.");
-		assertEquals(dao.getHelpMessage("Sign In"), "This is the Sign In page.");
-		assertEquals(dao.getHelpMessage("Sign Out"), "This is the Sign Out page.");
-		assertEquals(dao.getHelpMessage("View Game"), "This is the View Game page.");
+	public void getInstructionalText() {
+		assertEquals(dao.getInstructionalText("Home"), "This is the Home page.");
+		assertEquals(dao.getInstructionalText("About"), "This is the About page.");
+		assertEquals(dao.getInstructionalText("Admin"), "This is the Admin page.");
+		assertEquals(dao.getInstructionalText("New Game"), "This is the New Game page.");
+		assertEquals(dao.getInstructionalText("Profile"), "This is the Profile page.");
+		assertEquals(dao.getInstructionalText("Sign In"), "This is the Sign In page.");
+		assertEquals(dao.getInstructionalText("Sign Out"), "This is the Sign Out page.");
+		assertEquals(dao.getInstructionalText("View Game"), "This is the View Game page.");
 		
 	}
 }

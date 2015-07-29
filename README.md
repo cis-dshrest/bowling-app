@@ -67,16 +67,21 @@ A checklist of what we need to accomplish:
 
 1. **Create a servlet to host the web application**
 
-	1.1. A rudementary web application has been implemented. It needs to be tested with jbehave (smoke/behavior testing?)
+	1.1. A rudementary web application has been implemented. It needs to be tested with jbehave (smoke/behavior testing?)  
 
-2. Automate the dependencies and jars
+
+2. **Automate the dependencies and jars**  
 	
-	2.1 Started researching into maven 
+	2.1 Started researching into maven  
 
 
-3. Add content to the jsp pages. 
+3. Add content to the jsp pages.  
 	
-	3.1 Setup login page.
+	3.1 Setup login page.  
+
+4. Complete a GET request from the help.jsp page to it's controller and return string as a message.
+   To accomplish this, send page title to help.jsp on click of the + sign.
+
 
 
 4. Add users into a database.

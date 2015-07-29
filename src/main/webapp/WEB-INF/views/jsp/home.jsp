@@ -1,6 +1,7 @@
 <html>
   <head>
     <title>Home</title>
+    <script type="text/javascript" src=http://code.jquery.com/jquery-2.1.4.min.js></script>
   </head>
   
   <body>
@@ -12,9 +13,8 @@
     <h2>${welcomeMessage}</h2>
     
     <!--  Help module -->
-    <div id="helpbox">
-      <%@include file="help.jsp"%>
-    </div>
-  
+    <%@include file="help.jsp"%>
+     
   </body>
+  
 </html>

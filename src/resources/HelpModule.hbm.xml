@@ -5,8 +5,10 @@
 
 <hibernate-mapping package="org.hibernate.tutorial.domain">
     <class name="HelpModule" table="HELPMESSAGES">
-        <id name="id" column="EVENT_ID">
+        <id name="id" column="MESSAGE_ID">
             <generator class="native"/>
         </id>
+        <property name="pageTitle" column="PAGE_TITLE" type="string" />
+        <property name="helpMessage" column="HELP_MESSAGE" type="string" />
     </class>
 </hibernate-mapping>

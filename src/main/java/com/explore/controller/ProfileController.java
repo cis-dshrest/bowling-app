@@ -11,7 +11,7 @@ public class ProfileController extends AbstractController{
 	@Override
 	protected ModelAndView handleRequestInternal(HttpServletRequest arg0,
 			HttpServletResponse arg1) throws Exception {
-		ModelAndView mav = new ModelAndView("ProfilePage");
+		ModelAndView mav = new ModelAndView("profile");
 		return mav;
 	}
 
