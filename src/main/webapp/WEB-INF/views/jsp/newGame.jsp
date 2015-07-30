@@ -1,6 +1,8 @@
 <html>
 <head>
-<title>New Game</title>
+  <title>New Game</title>
+  <!-- javascript and css -->
+  <%@include file="includes.jsp"%>
 </head>
 
 <body>
@@ -14,11 +16,11 @@
   <a href="newgame.html">New Game</a>
   <br>
   <h2>New Game Page!</h2>
-  
+
   <!--  Help module -->
   <div id="helpbox">
     <%@include file="help.jsp"%>
   </div>
-  
+
 </body>
 </html>

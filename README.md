@@ -16,19 +16,10 @@ Exploratory testing
 ###Objective
 ------------
 
-We're trying to create a bowling application as a way to teach exploratory testing. The goal is to let testers learn exploratory testing by finding bugs that we intentionally hid in the bowling game. Bugs can be hidden in any parts of the system from 
+We're trying to create a bowling application as a way to teach exploratory testing. The goal is to let testers learn exploratory testing by finding bugs that we intentionally hid in the bowling game. Bugs can be hidden in any parts of the system like the
 
----
-*Not creating a game*
----------------------
-* The game itself. For example:
-	- bug that never lets the ball go straight. (Always gutter to start with)
-
----
-
-* The scoring system. For example:
+* Scoring system. For example:
 	- bug in adding scores. If they get a strike, just add 1 to their overall point. Then let them find the bug in our code and change it. Increase the difficulty from there?
-
 
 
 ---
@@ -41,6 +32,7 @@ The tools that we're using are given below:
 - apache tomcat 8
 - selenium 2.46.0
 - spring framework 4.1.6
+- hibernate 
 - mockito 
 - jbehave
 - MySQL (database)
@@ -77,22 +69,31 @@ A checklist of what we need to accomplish:
 
 3. Add content to the jsp pages.  
 	
-	3.1 Setup login page.  
+    3.1 Setup login page.
 
-4. Complete a GET request from the help.jsp page to it's controller and return string as a message.
-   To accomplish this, send page title to help.jsp on click of the + sign.
-
-
-
-4. Add users into a database.
+    3.2 Complete a GET request from the help.jsp page to it's controller and return string as a message.
+    
+    3.3 Create users according to user stories.  
 
 
+4. Setup database with hibernate
+
+    4.1 Create a mysql database(name=exploration). Create 'helpmessage' table 
+        with placeholder data.  
+        
+    4.2 Integrate hibernate with spring
+    
+
+  
 ---
 
 
-###Scoring System
------------------
+###Step 2
+---------
 
+
+####The scoring system
+---
 
 Logic:
 
@@ -104,3 +105,5 @@ a. Strike
 
 	- 10 points awarded for knocking down all pins.
 	- 
+	
+b. Spare

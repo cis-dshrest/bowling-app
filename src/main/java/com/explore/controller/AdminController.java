@@ -12,7 +12,7 @@ public class AdminController extends AbstractController {
 	protected ModelAndView handleRequestInternal(HttpServletRequest arg0,
 			HttpServletResponse arg1) throws Exception {
 			
-		ModelAndView mav = new ModelAndView("AdminPage");
+		ModelAndView mav = new ModelAndView("admin");
 		return mav;
 	}
 

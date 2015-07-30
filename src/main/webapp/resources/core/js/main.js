@@ -19,7 +19,8 @@ function expandCollapse(showHide) {
 	
 	// show it
 	if(hideShowDiv.style.display == 'none') {
-		label.innerHTML = label.innerHTML.replace("[+]", "[-]");
+		label.innerHTML = label.innerHTML.replace("Need Help?", "Hide");
+		label.className = "btn btn-danger"
 		hideShowDiv.style.display = 'block';
 		
 		//make ajax call
@@ -33,7 +34,8 @@ function expandCollapse(showHide) {
 	
 	// hide it
 	else {
-		label.innerHTML = label.innerHTML.replace("[-]", "[+]");
+		label.innerHTML = label.innerHTML.replace("Hide", "Need Help?");
+		label.className = "btn btn-primary"
 		hideShowDiv.style.display = 'none';
 	}
 }
