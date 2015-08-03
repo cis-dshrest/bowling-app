@@ -14,7 +14,7 @@ function expandCollapse(showHide) {
 	
 	var pageTitle = document.title;
 	
-	var hideShowDiv = document.getElementById(showHide);
+	var hideShowDiv = document.getElementById("showHide");
 	var label = document.getElementById("expand");
 	
 	// show it

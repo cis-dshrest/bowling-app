@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
 import com.explore.model.HelpModule;
-import com.explore.model.HibernateUtil;
+import com.explore.model.HelpModuleDao;
 
 public class HelpModuleController extends AbstractController {
 

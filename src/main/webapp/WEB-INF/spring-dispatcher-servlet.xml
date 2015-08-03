@@ -13,7 +13,7 @@
  	<bean	id="HandlerMapping"  class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
  
 	
-	<bean id="helloController" name="/" class="com.explore.controller.HelloController" />
+	<bean name="/" class="com.explore.controller.HelloController" />
 	<bean name="/about.html" class="com.explore.controller.AboutController"/>
 	<bean name="/signin.html" class="com.explore.controller.SignInController"/>
 	<bean name="/admin.html" class="com.explore.controller.AdminController"/>
