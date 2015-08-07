@@ -26,7 +26,7 @@ function expandCollapse(showHide) {
 		//make ajax call
 		var divMessage = $("#helpBody");
 		if ($("#helpBody").is(":empty")) {
-			$.get("/Exploration/help.html?title="+pageTitle, function(data, status) {
+			$.get("/Exploration/help?title="+pageTitle, function(data, status) {
 				divMessage.text(data);
 			});
 		}
