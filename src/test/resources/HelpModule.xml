@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<helpModule id="1"	pageTitle="Home"	helpMessage="This is the home page."	/>
+	<helpModule id="2"	pageTitle="About"	helpMessage="This is the about page."	/>
+</dataset>

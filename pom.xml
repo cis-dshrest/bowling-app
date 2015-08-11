@@ -33,6 +33,11 @@
             <version>${springframework.version}</version>
         </dependency>
         <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-context</artifactId>
+          <version>${springframework.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
             <version>${springframework.version}</version>
@@ -163,6 +168,12 @@
 		    <artifactId>commons-dbcp2</artifactId>
 		    <version>2.0</version>
 		</dependency>
+        <dependency>
+          <groupId>commons-collections</groupId>
+          <artifactId>commons-collections</artifactId>
+          <version>3.2.1</version>
+        </dependency>
+    
 	   
     </dependencies>
     
@@ -191,7 +202,7 @@
 				</plugin>
 			</plugins>
 		</pluginManagement>
-		<finalName>SpringHibernateExample</finalName>
+		<finalName>Exploration</finalName>
 	</build>
 </project>
 

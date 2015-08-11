@@ -57,32 +57,14 @@ Behavior Driven Development(BDD) uses *user stories* to come up with test cases.
 
 A checklist of what we need to accomplish:
 
-1. **Create a servlet to host the web application**
-
-	1.1. A rudementary web application has been implemented. It needs to be tested with jbehave (smoke/behavior testing?)  
-
-
-2. **Automate the dependencies and jars**  
+- user management system (in progress)
+	- login
+	- registration
+	- edit preferences
 	
-	2.1 Started researching into maven  
 
-
-3. Add content to the jsp pages.  
-	
-    3.1 Setup login page.
-
-    3.2 Complete a GET request from the help.jsp page to it's controller and return string as a message.
-    
-    3.3 Create users according to user stories.  
-
-
-4. Setup database with hibernate
-
-    4.1 Create a mysql database(name=exploration). Create 'helpmessage' table 
-        with placeholder data.  
-        
-    4.2 Integrate hibernate with spring
-    
+- create game 
+- score the game
 
   
 ---

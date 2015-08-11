@@ -31,7 +31,7 @@ public class HelpModuleServiceImpl implements HelpModuleService {
 	public void updateHelpModule(HelpModule helpModule) {
 		HelpModule entity = dao.findByPageTitle(helpModule.getPageTitle());
 		if(entity!=null){
-			entity.setId(null);
+			entity.setId(helpModule.getId());
 			entity.setPageTitle(helpModule.getPageTitle());
 			entity.setHelpMessage(helpModule.getHelpMessage());
 		}
@@ -50,6 +50,7 @@ public class HelpModuleServiceImpl implements HelpModuleService {
 
 	@Override
 	public HelpModule findHelpModuleByPageTitle(String pageTitle) {
+		System.out.println("serviceimpl: ");
 		return dao.findHelpModuleByPageTitle(pageTitle);
 	}
 

@@ -26,7 +26,7 @@ nav ul>li {
     <ul class="nav navbar-nav">
 <%--       <li><a href="<%=request.getContextPath()%>">Home</a></li> --%>
       <li><a href="/Exploration/about">About</a></li>
-      <li><a href="/signin">Sign In</a></li>
+      <li><a href="/Exploration/signin">Sign In</a></li>
       <li><a href="/admin">Admin</a></li>
 <!--       <li><a href="newgame.html">New Game</a></li> -->
 <!--       <li><a href="viewgame.html">View Game</a></li> -->

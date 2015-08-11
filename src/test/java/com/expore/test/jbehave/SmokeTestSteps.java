@@ -11,7 +11,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 
 public class SmokeTestSteps extends Steps {
-	private String pageName;
+	private String pageTitle;
 	private String nextPage;
 	private String pageContent;
 	
@@ -25,13 +25,13 @@ public class SmokeTestSteps extends Steps {
 	@Given( "a user is on the page Home")
 	public void getPageValue(String page){
 		System.out.println("homepage:");
-		pageName = "Home";
+		pageTitle = "Home";
 	}
 	@When("the user clicks the link About")
 	public void getLinkValue(String link){
 		nextPage = link;
 	}
-	@Then("the page shoudl read About")
+	@Then("the page should read About")
 	public void correctPage(String page, String newPageText){
 		System.out.println("done");
 //		if(!(pageContent.equals(newPageText))){

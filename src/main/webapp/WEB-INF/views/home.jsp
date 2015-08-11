@@ -17,7 +17,7 @@
     
       <!--  Help module -->
       <%@include file="help.jsp"%>
-      	<table>
+<%--       	<table>
 			<tr>
 				<td>ID</td><td>Page</td><td>Body</td><td></td>
 			</tr>
@@ -25,11 +25,10 @@
 				<tr>
 					<td>${employee.id}</td>
 					<td>${employee.pageTitle}</td>
-					<td>${employee.helpMessage}</td>
-				
+					<td>${employee.helpMessage}</td>				
 				</tr>
 			</c:forEach>
-		</table>
+		</table> --%>
       
     </div>
 

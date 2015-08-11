@@ -15,7 +15,7 @@ public class HelpModule {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private int id;
 	
 	@Column(name = "title", unique = true, nullable = false)
 	private String pageTitle;
@@ -27,9 +27,9 @@ public class HelpModule {
 	
 	public HelpModule() { }
 	
-	public Long getId() { return id; }
+	public int getId() { return id; }
 	
-	public void setId(Long id) { this.id = id; }
+	public void setId(int i) { this.id = i; }
 	
 	public String getPageTitle() { return pageTitle; }
 	

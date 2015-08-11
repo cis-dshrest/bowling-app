@@ -8,8 +8,6 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import com.explore.learn.model.HelpModule;
-import com.explore.learn.dao.AbstractDao;
-import com.explore.learn.dao.HelpModuleDao;
 
 @Repository("helpModuleDao")
 public class HelpModuleDaoImpl extends AbstractDao<Integer, HelpModule> implements HelpModuleDao {
@@ -19,8 +17,7 @@ public class HelpModuleDaoImpl extends AbstractDao<Integer, HelpModule> implemen
 	}
 
 	public void saveHelpModule(HelpModule helpModule) {
-		persist(helpModule);
-		
+		persist(helpModule);	
 	}
 
 	public void deleteHelpModuleByPageTitle(String pageTitle) {
@@ -37,10 +34,9 @@ public class HelpModuleDaoImpl extends AbstractDao<Integer, HelpModule> implemen
 	}
 
 	public HelpModule findHelpModuleByPageTitle(String pageTitle) {
-		Criteria criteria = createEntityCriteria();
-		criteria.add(Restrictions.eq("title", pageTitle));
-		System.out.println("helpmodueldaoimpl: " + criteria.uniqueResult().toString());
-		return (HelpModule) criteria.uniqueResult();
+		Criteria criteria = getSession().createCriteria(HelpModule.class);
+		criteria.add(Restrictions.eq("pageTitle", pageTitle));
+		return (HelpModule) criteria.uniqueResult();		
 	}
 
 }
