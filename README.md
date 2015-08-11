@@ -35,9 +35,41 @@ The tools that we're using are given below:
 - hibernate 
 - mockito 
 - jbehave
-- MySQL (database)
+- MySQL 5.6 (database)
 - git (revision control)
 
+
+---
+
+###To run
+---------
+1. Get eclipse [maven plugin](http://www.eclipse.org/m2e/)  
+2. Get [apache tomcat](http://tomcat.apache.org/download-80.cgi)  
+3. Get [mysql 5.6](http://dev.mysql.com/downloads/mysql/)
+
+4. **Start the mysql server**
+
+####Manually
+------------
+1. Go to the root folder  
+
+```
+$ mvn clean install
+```
+
+2. Copy the generated war file to tomcat's `webapp` directory.
+```
+$ cp target/Exploration.war {tomcat-directory}/webapps/
+```
+
+3. Run tomcat
+```
+$ sh {tomcat-directory}/bin/catalina.sh start
+```
+
+####Eclipse
+Import the project. Right click > maven > update project  
+Then deploy using tomcat server from eclipse.
 
 ---
 
