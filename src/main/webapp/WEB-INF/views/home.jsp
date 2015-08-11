@@ -3,6 +3,7 @@
   <title>Home</title>
   <!-- javascript and css -->
   <%@include file="includes.jsp"%>
+  
 </head>
 
 <body>
@@ -19,13 +20,16 @@
       <%@include file="help.jsp"%>
 <%--       	<table>
 			<tr>
-				<td>ID</td><td>Page</td><td>Body</td><td></td>
+				<td>ID</td><td>first name</td><td>last name</td><td>username</td><td>password</td><td>role</td><td></td>
 			</tr>
-		    <c:forEach items="${employees}" var="employee">
+		    <c:forEach items="${users}" var="user">
 				<tr>
-					<td>${employee.id}</td>
-					<td>${employee.pageTitle}</td>
-					<td>${employee.helpMessage}</td>				
+					<td>${user.id}</td>
+					<td>${user.firstName}</td>
+					<td>${user.lastName}</td>
+                    <td>${user.username}</td>
+                    <td>${user.password}</td>
+                    <td>${user.role}</td>			
 				</tr>
 			</c:forEach>
 		</table> --%>

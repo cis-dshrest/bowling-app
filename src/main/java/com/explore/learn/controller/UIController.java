@@ -43,8 +43,11 @@ public class UIController {
 	@RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
 	public String listHelpMessage(ModelMap model) {
 
-		List<HelpModule> hmList = helpModuleService.findAllEmployees();
-		model.addAttribute("employees", hmList);
+//		List<HelpModule> hmList = helpModuleService.findAllEmployees();
+//		model.addAttribute("employees", hmList);
+		
+//		List<User> userList = userService.findAllUsers();
+//		model.addAttribute("users", userList);
 		return "home";
 	}
 	
@@ -74,9 +77,16 @@ public class UIController {
 	}
 	
 	@RequestMapping(value = { "/signin" }, method = RequestMethod.GET)
+	public String getSignin(ModelMap model) {
+		return "signin";
+	}
+	
+	
+	@RequestMapping(value = { "/signin" }, method = RequestMethod.POST)
 	public String signin(ModelMap model) {
 		return "signin";
 	}
+	
 	
 	@RequestMapping(value = { "/register" }, method = RequestMethod.GET)
 	public String newUser(ModelMap model) {
@@ -88,8 +98,9 @@ public class UIController {
 	
 	@RequestMapping(value = { "/register" }, method = RequestMethod.POST)
 	public String saveUser(@Valid User user, BindingResult result,
-							ModelMap model) {
+			ModelMap model) {
 		
+		System.out.println("\n\nsaving user: " + user);
 		if (result.hasErrors()) {
 			System.out.println("errors in registering user");
 			return "register";
@@ -102,10 +113,14 @@ public class UIController {
 			return "register";
 		}
 		
-		System.out.println(user);
 		userService.saveUser(user);
 		
-		return "profile";
+		return registrationSuccess(model);
+	}
+	
+	@RequestMapping(value = { "/registerSuccess" }, method = RequestMethod.GET)
+	public String registrationSuccess(ModelMap model) {
+		return "registerSuccess";
 	}
 	
 	

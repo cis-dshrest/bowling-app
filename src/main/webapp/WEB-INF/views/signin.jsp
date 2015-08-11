@@ -26,7 +26,7 @@
     <form class="form-signin" action="/Exploration/signin" method="POST">
       <h2 class="form-signin-heading">Please sing in</h2>
       <label for="inputEmail" class="sr-only">Email address</label>
-      <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+      <input type="text" id="usernameText" class="form-control" placeholder="Username" required autofocus>
       <label for="inputPassword" class="sr-only">Password</label>
       <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
       
@@ -38,9 +38,7 @@
     <a href="/Exploration/resetaccount">Can't access your account?</a>
     <br>
     <br>
-    <form action="/Exploration/register" method="GET">
-      <input class="btn btn-default" type="submit" value="Register" />
-    </form>
+    <a href="<c:url value="/register" />">Register</a>
     </div>
     <!-- ---------------------------------------------------------------------------------------------------- -->
     

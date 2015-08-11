@@ -19,28 +19,28 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@NotEmpty
+	@NotNull
 	@Size(min=3, max=20)
 	@Column(name = "username", unique = true, nullable = false)
 	private String username;
 	
 	@NotNull
-	@Size(min=3)
 	@Column(name = "password", nullable = false)
 	private String password;
 	
+	@NotNull
 	@Column(name = "firstname", nullable = false)
 	private String firstName;
 	
+	@NotNull
 	@Column(name = "lastname", nullable = false)
 	private String lastName;
-	
-	@NotNull
+
 	@Column(name = "role", nullable = false)
-	private String role;
+	private String role = "USER";
 	
 	@Column(name = "is_active", nullable = false)
-	private int isActive;
+	private int isActive = 1;
 
 	public int getId() {
 		return id;
@@ -103,7 +103,8 @@ public class User {
 		sb.append(this.getFirstName() + " ");
 		sb.append(this.getLastName() + " ");
 		sb.append(this.getUsername() + " ");
-		sb.append(this.getRole());
+		sb.append(this.getRole() + " ");
+		sb.append(this.getIsActive());
 		
 		return sb.toString();
 	}

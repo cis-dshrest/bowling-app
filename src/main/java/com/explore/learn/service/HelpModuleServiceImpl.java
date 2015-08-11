@@ -50,7 +50,6 @@ public class HelpModuleServiceImpl implements HelpModuleService {
 
 	@Override
 	public HelpModule findHelpModuleByPageTitle(String pageTitle) {
-		System.out.println("serviceimpl: ");
 		return dao.findHelpModuleByPageTitle(pageTitle);
 	}
 
