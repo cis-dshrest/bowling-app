@@ -9,12 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.explore.learn.dao.UserDao;
 import com.explore.learn.model.User;
 
+
 @Service("userService")
 @Transactional
 public class UserServiceImpl implements UserService {
 
 	@Autowired
-	UserDao dao;
+	private UserDao dao;
 	
 	@Override
 	public User findByUsername(String username) {
@@ -31,7 +32,6 @@ public class UserServiceImpl implements UserService {
 	public void updateUser(User user) {
 		User entity = dao.findByUsername(user.getUsername());
 		if(entity!=null){
-			entity.setId(user.getId());
 			entity.setFirstName(user.getFirstName());
 			entity.setLastName(user.getLastName());
 			entity.setPassword(user.getPassword());
@@ -61,6 +61,30 @@ public class UserServiceImpl implements UserService {
 	public boolean isUsernameUnique(String username) {
 		User user = findByUsername(username);
 		return (user == null);
+	}
+	
+	@Override
+	public AuthCode login(String username, String password) {
+		
+		User user = dao.findByUsername(username);
+		
+		if (user == null) {
+			return AuthCode.FAIL;
+		}
+		
+		if (username.equals(user.getUsername()) && 
+			password.equals(user.getPassword())) {
+			
+			if(user.getRole().equals("ADMIN")) {
+				return AuthCode.ADMIN;
+			}
+			else if(user.getRole().equals("USER")) {
+				return AuthCode.USER;
+			}
+		}
+		
+		return AuthCode.FAIL;
+		
 	}
 
 }

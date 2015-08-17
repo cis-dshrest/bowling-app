@@ -6,7 +6,7 @@ import com.explore.learn.model.HelpModule;
 
 public interface HelpModuleService {
 	
-	HelpModule findByPageTitle(String pageTitle);
+	HelpModule findHelpModuleByPageTitle(String pageTitle);
 	
 	void saveHelpModule(HelpModule helpModule);
 	
@@ -15,8 +15,6 @@ public interface HelpModuleService {
 	void deleteHelpModuleByPageTitle(String pageTitle);
 
 	List<HelpModule> findAllEmployees(); 
-	
-	HelpModule findHelpModuleByPageTitle(String pageTitle);
 
 	boolean isHelpModuleUnique(String pageTitle);
 	

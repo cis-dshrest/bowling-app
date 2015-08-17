@@ -17,10 +17,9 @@ public class HelpModuleServiceImpl implements HelpModuleService {
 	private HelpModuleDao dao;
 	
 	@Override
-	public HelpModule findByPageTitle(String pageTitle) {
-		return dao.findByPageTitle(pageTitle);
+	public HelpModule findHelpModuleByPageTitle(String pageTitle) {
+		return dao.findHelpModuleByPageTitle(pageTitle);
 	}
-
 	@Override
 	public void saveHelpModule(HelpModule helpModule) {
 		dao.saveHelpModule(helpModule);
@@ -29,7 +28,7 @@ public class HelpModuleServiceImpl implements HelpModuleService {
 	
 	@Override
 	public void updateHelpModule(HelpModule helpModule) {
-		HelpModule entity = dao.findByPageTitle(helpModule.getPageTitle());
+		HelpModule entity = dao.findHelpModuleByPageTitle(helpModule.getPageTitle());
 		if(entity!=null){
 			entity.setId(helpModule.getId());
 			entity.setPageTitle(helpModule.getPageTitle());
@@ -48,10 +47,7 @@ public class HelpModuleServiceImpl implements HelpModuleService {
 		return dao.findAllHelpModules();
 	}
 
-	@Override
-	public HelpModule findHelpModuleByPageTitle(String pageTitle) {
-		return dao.findHelpModuleByPageTitle(pageTitle);
-	}
+
 
 	@Override
 	public boolean isHelpModuleUnique(String pageTitle) {

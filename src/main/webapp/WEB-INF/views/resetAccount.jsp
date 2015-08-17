@@ -1,30 +1,29 @@
 <html>
 <head>
-  <title>Admin</title>
+  <title>Reset Account</title>
   <!-- javascript and css -->
   <%@include file="includes.jsp"%>
 </head>
 
 <body>
-  
+
   <!--  Navigation -->
-  <%@include file="navigation.jsp" %>
-  
+  <%@include file="navigation.jsp"%>
+
   <div class="container">
-  
     <br>
     <br>
     <a href="<%=request.getContextPath()%>">Home</a> >
-    <a href="admin.html">Admin</a>
+    <a href="/Exploration/user/resetaccount">Reset Account</a>
     <br>
-    <h1>Admin page!</h1>
-    
+    <h2>Reset Account</h2>
+  
     <!--  Help module -->
     <div id="helpbox">
       <%@include file="help.jsp"%>
     </div>
-      
+    
   </div>
-  
+
 </body>
 </html>

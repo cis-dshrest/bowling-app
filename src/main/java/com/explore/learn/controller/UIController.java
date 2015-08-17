@@ -2,27 +2,40 @@ package com.explore.learn.controller;
 
 
 import java.io.PrintWriter;
-import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.explore.learn.model.HelpModule;
 import com.explore.learn.model.User;
 import com.explore.learn.service.HelpModuleService;
 import com.explore.learn.service.UserService;
 
+/**
+ * This controller should take care of all the links in the navigation bar
+ * for visitors.
+ * 
+ * @author David S.
+ * @since  08/17/2015
+ *
+ */
 
 @Controller
 @RequestMapping("/")
@@ -37,9 +50,7 @@ public class UIController {
 	@Autowired
 	MessageSource messageSource;
 
-	/*
-	 * This method will list all existing employees.
-	 */
+	
 	@RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
 	public String listHelpMessage(ModelMap model) {
 
@@ -48,8 +59,10 @@ public class UIController {
 		
 //		List<User> userList = userService.findAllUsers();
 //		model.addAttribute("users", userList);
+	
 		return "home";
 	}
+
 	
 	/** 
 	 * Implementation of the help module for all the pages.
@@ -76,17 +89,19 @@ public class UIController {
 		return "about";
 	}
 	
-	@RequestMapping(value = { "/signin" }, method = RequestMethod.GET)
-	public String getSignin(ModelMap model) {
-		return "signin";
+	
+	@RequestMapping(value = { "/login" }, method = RequestMethod.GET)
+	public String loginForm(HttpServletRequest request, ModelMap model) {
+		
+		HttpSession session = request.getSession(true);
+		if (session != null && session.getAttribute("username") != null) {
+			return "redirect:/user/profile";
+		}
+		
+		
+		model.addAttribute("errorMsg", "none");
+		return "login";
 	}
-	
-	
-	@RequestMapping(value = { "/signin" }, method = RequestMethod.POST)
-	public String signin(ModelMap model) {
-		return "signin";
-	}
-	
 	
 	@RequestMapping(value = { "/register" }, method = RequestMethod.GET)
 	public String newUser(ModelMap model) {
@@ -101,15 +116,16 @@ public class UIController {
 			ModelMap model) {
 		
 		System.out.println("\n\nsaving user: " + user);
+		
 		if (result.hasErrors()) {
 			System.out.println("errors in registering user");
 			return "register";
 		}
 		
-		if(!userService.isUsernameUnique(user.getUsername())){
+		boolean uniqueUser = userService.isUsernameUnique(user.getUsername());
+		if(!uniqueUser){
 			FieldError duplicateUserError =new FieldError("user","username",messageSource.getMessage("non.unique.username", new String[]{user.getUsername()}, Locale.getDefault()));
 		    result.addError(duplicateUserError);
-		    System.out.println("errors, not unique username");
 			return "register";
 		}
 		
@@ -122,8 +138,11 @@ public class UIController {
 	public String registrationSuccess(ModelMap model) {
 		return "registerSuccess";
 	}
+		
 	
-	
-
+	@RequestMapping(value = {"/403"}, method = RequestMethod.GET)
+	public String accessDenied(ModelMap model) {
+		return "403";
+	}
 
 }

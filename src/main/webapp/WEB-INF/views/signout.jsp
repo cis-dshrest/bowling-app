@@ -13,9 +13,8 @@
   <br>
   <br>
   <a href="<%=request.getContextPath()%>">Home</a> >
-  <a href="signout.html">Sign Out</a>
+  <a href="/signout">Sign Out</a>
   <br>
-  <h2>Sign Out Page!</h2>
 
   <!--  Help module -->
   <div id="helpbox">

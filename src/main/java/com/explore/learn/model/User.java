@@ -14,25 +14,26 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @Table(name = "user")
 public class User {
-
+	
 	@Id
+	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	@NotNull
+
+	@NotEmpty
 	@Size(min=3, max=20)
 	@Column(name = "username", unique = true, nullable = false)
 	private String username;
 	
-	@NotNull
+	@NotEmpty
 	@Column(name = "password", nullable = false)
 	private String password;
 	
-	@NotNull
+	@NotEmpty
 	@Column(name = "firstname", nullable = false)
 	private String firstName;
 	
-	@NotNull
+	@NotEmpty
 	@Column(name = "lastname", nullable = false)
 	private String lastName;
 
@@ -100,6 +101,7 @@ public class User {
 	
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
+		sb.append(this.getId() + " " );
 		sb.append(this.getFirstName() + " ");
 		sb.append(this.getLastName() + " ");
 		sb.append(this.getUsername() + " ");

@@ -12,8 +12,10 @@ import com.explore.learn.model.HelpModule;
 @Repository("helpModuleDao")
 public class HelpModuleDaoImpl extends AbstractDao<Integer, HelpModule> implements HelpModuleDao {
 
-	public HelpModule findByPageTitle(String pageTitle) {
-		return getByKey(pageTitle);
+	public HelpModule findHelpModuleByPageTitle(String pageTitle) {
+		Criteria criteria = getSession().createCriteria(HelpModule.class);
+		criteria.add(Restrictions.eq("pageTitle", pageTitle));
+		return (HelpModule) criteria.uniqueResult();		
 	}
 
 	public void saveHelpModule(HelpModule helpModule) {
@@ -31,12 +33,6 @@ public class HelpModuleDaoImpl extends AbstractDao<Integer, HelpModule> implemen
 	public List<HelpModule> findAllHelpModules() {
 		Criteria criteria = createEntityCriteria();
 		return (List<HelpModule>) criteria.list();
-	}
-
-	public HelpModule findHelpModuleByPageTitle(String pageTitle) {
-		Criteria criteria = getSession().createCriteria(HelpModule.class);
-		criteria.add(Restrictions.eq("pageTitle", pageTitle));
-		return (HelpModule) criteria.uniqueResult();		
 	}
 
 }

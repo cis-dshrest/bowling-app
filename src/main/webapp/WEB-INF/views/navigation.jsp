@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <style>
 nav>ul { list-style-type:none;
@@ -22,17 +23,30 @@ nav ul>li {
     </button>
     <a class="navbar-brand" href="<%=request.getContextPath()%>">Exploratory Testing</a>
   </div>
+  
   <div id="navbar" class="navbar-collapse collapse">
     <ul class="nav navbar-nav">
-<%--       <li><a href="<%=request.getContextPath()%>">Home</a></li> --%>
+      
       <li><a href="/Exploration/about">About</a></li>
-      <li><a href="/Exploration/signin">Sign In</a></li>
-      <li><a href="/admin">Admin</a></li>
-<!--       <li><a href="newgame.html">New Game</a></li> -->
-<!--       <li><a href="viewgame.html">View Game</a></li> -->
-<!--       <li><a href="signout.html">Sign Out</a></li> -->
-<!--       <li><a href="profile.html">Name</a></li> -->
+      <c:choose>
+        <c:when test="${sessionScope.role != null}">
+          <li><a href="/Exploration/user/profile">Profile</a></li>
+          <li><a href="/Exploration/user/creategame">Create Game</a></li>
+        </c:when>
+        <c:otherwise>
+          <li><a href="/Exploration/login">Sign In</a></li>
+        </c:otherwise>
+      </c:choose>
+      <c:if test="${sessionScope.role == 'admin'}">
+        <li><a href="/Exploration/admin/listusers">Edit Users</a></li>
+      </c:if>
     </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <c:if test="${sessionScope.role != null}">
+        <li><a href="/Exploration/user/logout">Logout</a></li>
+      </c:if>
+    </ul>
+    
   </div>
 </div>
 </nav>

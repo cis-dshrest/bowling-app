@@ -1,47 +1,24 @@
-n<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html>
 <head>
-  <title>Profile</title>
+  <title>Edit User</title>
   <!-- javascript and css -->
   <%@include file="includes.jsp"%>
-  
-  <script>
-    $(function() {
-        // disable all the input boxes
-        $("input, submit").attr("disabled", "disabled");
-  
-        // add handler to re-enable input boxes on click
-        $("#userPrefButton").click(function() {
-            $("input").removeAttr("disabled");
-            $("#userpref").show();
-        });
-    });
-  </script>
 </head>
 
 <body>
 
   <!--  Navigation -->
   <%@include file="navigation.jsp"%>
-
+  
   <div class="container">
-
-    <br> <br> <a href="<%=request.getContextPath()%>">Home</a>
-    > <a href="/Exploration/user/profile">Profile</a> <br>
-
-    <c:if test="${realName != null}">
-      <h2>Welcome : ${realName} !</h2>
-    </c:if>
-
-    <div class="container">
-      <div class="jumbotron">
-        <button id="userPrefButton" class="btn btn-default">Edit
-          Preferences</button>
-        <br>
-        <br>
-        <div id="userpref" style="display: none;">
-          <form:form action="/Exploration/user/modify" method="POST"
+    <br>
+    <br>
+    <a href="<%=request.getContextPath()%>">Home</a> >
+    <a href="/Exploration/admin/edit-${breadcrumUsername}-user">Sign Out</a>
+    <br>
+    
+    <form:form action="/Exploration/admin/modify" method="POST"
             modelAttribute="user">
             <form:input type="hidden" path="id" name="id" />
             <table>
@@ -77,20 +54,11 @@ n<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
             </table>
           </form:form>
-        </div>
-
-        <br>
-        <hr>
-        <br>
-      </div>
-    </div>
-
     <!--  Help module -->
     <div id="helpbox">
       <%@include file="help.jsp"%>
     </div>
-
-
+    
   </div>
 
 </body>

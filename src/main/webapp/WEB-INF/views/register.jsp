@@ -4,6 +4,12 @@
 <title>Register</title>
 <!-- javascript and css -->
 <%@include file="includes.jsp"%>
+
+<style>
+  .error {
+    color: #ff0200;
+  }
+</style>
 </head>
 
 <body>
@@ -15,44 +21,61 @@
 
     <br> <br> <a href="<%=request.getContextPath()%>">Home</a>
     > <a href="/Exploration/register">Register</a> <br>
-    <h2>Sign In Page!</h2>
 
     <br>
 
     <!-- Register -->
     <!-- ---------------------------------------------------------------------------------------------------- -->
-    <form:form action="/Exploration/register" method="POST" modelAttribute="user">
-      <form:input type="hidden" path="id" id="id"/>
-      <table>
-        <tr>
-          <td><label for="firstName">First Name: </label></td>
-          <td><form:input path="firstName" id="firstName" /></td>
-          <td><form:errors path="firstName" cssClass="error" /></td>
-        </tr>
+    <form:form class="form-horizontal" action="/Exploration/register" method="POST" modelAttribute="user">
+      <fieldset>
+        <div id="legend">Register</div>
+        
+        <form:input type="hidden" path="id" name="id"/>
 
-        <tr>
-          <td><label for="lastName">Last Name: </label></td>
-          <td><form:input path="lastName" id="lastName" /></td>
-          <td><form:errors path="lastName" cssClass="error" /></td>
-        </tr>
+        <div class="form-group">
+          <!-- First Name -->
+          <label class="control-label col-xs-2" for="firstName">First Name: </label>
+          <div class="col-xs-4">
+            <form:input class="form-control" type="text" path="firstName" id="firstName"/>
+            <form:errors class="form-control" path="firstName" cssClass="error" />
+          </div>
+        </div>
         
-        <tr>
-          <td><label for="name">Username: </label></td>
-          <td><form:input path="username" id="username" /></td>
-          <td><form:errors path="username" cssClass="error" /></td>
-        </tr>
+        <div class="form-group">
+          <!-- Last Name -->
+          <label class="control-label col-xs-2" for="lastName">Last Name: </label>
+          <div class="col-xs-4">
+            <form:input class="form-control" type="text" path="lastName" id="lastName" />
+            <form:errors path="lastName" cssClass="error" />
+          </div>
+        </div>
         
-        <tr>
-          <td><label for="password">Password: </label></td>
-          <td><form:input type="password" path="password" id="password" /></td>
-          <td><form:errors path="password" cssClass="error" /></td>
-        </tr>
-        
-        <tr>
-          <td><input type="submit" value="Register" /></td>
-        </tr>
+        <div class="form-group">
+          <!-- Username -->
+          <label class="control-label col-xs-2" for="name">Username: </label>
+          <div class="col-xs-4">
+            <form:input class="form-control" type="text" path="username" id="username" />
+            <form:errors path="username" cssClass="error" />
+          </div>
+        </div>
 
-      </table>
+        <div class="form-group">
+          <!-- Username -->
+          <label class="control-label col-xs-2" for="password">Password: </label>
+          <div class="col-xs-4">
+            <form:input class="form-control" type="password" path="password" id="password" />
+            <form:errors path="password" cssClass="error" />
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <div class="col-xs-offset-2 col-xs-10">
+            <input class="btn btn-primary" type="submit" value="Register" />
+          </div>
+        </div>
+
+      </fieldset>
+
     </form:form>
 
   </div>

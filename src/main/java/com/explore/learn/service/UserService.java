@@ -4,7 +4,13 @@ import java.util.List;
 
 import com.explore.learn.model.User;
 
+
 public interface UserService {
+	
+	public enum AuthCode
+	{
+	    FAIL, USER, ADMIN;
+	}
 	
 	User findByUsername(String username);
 	
@@ -19,5 +25,7 @@ public interface UserService {
 	User findUserByFirstLast(String first, String last);
 
 	boolean isUsernameUnique(String username);
+	
+	AuthCode login(String username, String password);
 	
 }
