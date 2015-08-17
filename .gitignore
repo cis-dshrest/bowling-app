@@ -1,3 +1,6 @@
+#Ignoring files
+.classpath
+
 # Ignoring binaries
 *.class
 
