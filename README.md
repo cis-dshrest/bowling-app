@@ -1,7 +1,7 @@
 Exploratory testing
 ===================
 
-*Exploratory testing* is different that most of the tests out there. It cannot be automated like unit testing and has to be done manually.
+*Exploratory testing* is different that most of the tests out there. It cannot be automated like unit testing and has to be done manually. - Testing Jenkins push
 
 
 ##Index
