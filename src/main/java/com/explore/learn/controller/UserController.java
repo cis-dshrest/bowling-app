@@ -78,7 +78,6 @@ public class UserController {
 		User user = userService.findByUsername(username);
 		String realName = user.getFirstName() + " " + user.getLastName();		
 		model.addAttribute("realName", realName);
-		
 		model.addAttribute("user", user);
 		return "profile";
 	}
@@ -86,7 +85,6 @@ public class UserController {
 	@RequestMapping(value = { "/modify" }, method = RequestMethod.POST)
 	public String modify(@Valid User user, BindingResult result,
 			ModelMap model) {
-		
 		userService.updateUser(user);
 		return "modifySuccess";
 	}
@@ -102,9 +100,13 @@ public class UserController {
 		return "redirect:/403";
 	}
 	
-	
 	@RequestMapping(value = {"/resetaccount" }, method = RequestMethod.GET)
 	public String resetAccount(ModelMap model) {
 		return "resetAccount";
+	}
+	
+	@RequestMapping(value = {"/creategame" }, method = RequestMethod.GET)
+	public String createGame(ModelMap model) {
+		return "creategame";
 	}
 }

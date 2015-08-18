@@ -1,3 +1,4 @@
+create database if not exists exploration;
 use exploration;
 create table if not exists helpmessage
 (
@@ -16,6 +17,8 @@ insert ignore into helpmessage(id, title, body) values(null, "Admin", "This is t
 insert ignore into helpmessage(id, title, body) values(null, "Profile", "This is the Profile page. Here you can update your information.");
 insert ignore into helpmessage(id, title, body) values(null, "Sign In", "Please sign in to advance. You will need to register for an account if you haven't done so.\nForgot your password? Click forgot password and follow instructions.");
 insert ignore into helpmessage(id, title, body) values(null, "Sign Out", "This is the Sign out page.");
+insert ignore into helpmessage(id, title, body) values(null, "Edit Users", "Administrators can edit other user preferences from resetting other user's passwords to making a user active or inactive. Admins can also delete users.");
+insert ignore into helpmessage(id, title, body) values(null, "Create Game", "Add your friends and create a game.");
 
 
 create table if not exists user
@@ -33,3 +36,4 @@ create table if not exists user
 
 insert ignore into user(firstname, lastname, username, password) values("tom", "hanks", "testuser", "password");
 insert ignore into user(firstname, lastname, username, password) values("ed", "eddy", "edddy", "password");
+insert ignore into user(firstname, lastname, username, password, role) values("kumar", "shrestha", "kumar", "kumar", "ADMIN");

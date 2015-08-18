@@ -15,7 +15,7 @@
     <br>
     <br>
     <a href="<%=request.getContextPath()%>">Home</a> >
-    <a href="/Exploration/admin/edit-${breadcrumUsername}-user">Sign Out</a>
+    <a href="/Exploration/admin/edit-${breadcrumUsername}-user">Edit user ${breadcrumUsername}</a>
     <br>
     
     <form:form action="/Exploration/admin/modify" method="POST"
@@ -46,6 +46,18 @@
                     id="password" /></td>
                 <td><form:errors path="password" cssClass="error" /></td>
               </tr>
+              <tr>
+                <td><label for="role">Role: </label></td>
+                <td><form:input type="text" path="role"
+                    id="role" /></td>
+                <td><form:errors path="role" cssClass="error" /></td>
+              </tr>
+              <tr>
+                <td><label for="active">Active: </label></td>
+                <td><form:input type="text" path="isActive"
+                    id="isActive" /></td>
+                <td><form:errors path="isActive" cssClass="error" /></td>
+              </tr>
 
               <tr>
                 <td><input class="btn btn-warning"
@@ -53,11 +65,12 @@
               </tr>
 
             </table>
-          </form:form>
-    <!--  Help module -->
-    <div id="helpbox">
-      <%@include file="help.jsp"%>
-    </div>
+      </form:form>
+      
+      <!--  Help module -->
+      <div id="helpbox">
+        <%@include file="help.jsp"%>
+      </div>
     
   </div>
 

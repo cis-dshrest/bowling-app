@@ -74,7 +74,8 @@ n<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
                 <td><input class="btn btn-warning"
                   type="submit" value="Update" /></td>
               </tr>
-
+              
+              <form:input type="hidden" path="role" name="role" />
             </table>
           </form:form>
         </div>

@@ -45,7 +45,7 @@ public class UIControllerTest {
 	@Test
 	public void testGoBack() {
 		driver.navigate().back();
-		assertEquals(driver.getTitle(), "Home");
+		assertEquals(driver.getTitle(), "About");
 	}
 	
 	

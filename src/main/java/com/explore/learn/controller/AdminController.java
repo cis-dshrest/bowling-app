@@ -2,8 +2,6 @@ package com.explore.learn.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -74,7 +72,7 @@ public class AdminController {
 			ModelMap model) {
 		
 		userService.updateUser(user);
-		return "modifyAdminSuccess";
+		return "modifySuccess";
 	}
 	
 	@RequestMapping(value = { "/delete-{username}-user" }, method = RequestMethod.GET)
@@ -90,7 +88,7 @@ public class AdminController {
 		String role = (String) session.getAttribute("role");
 		
 		if (role.equalsIgnoreCase("admin")) {
-			return "profile";
+			return "modifySuccess";
 		}
 		else {
 			return "redirect:/403";
