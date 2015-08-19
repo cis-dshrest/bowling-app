@@ -10,3 +10,7 @@
 
 # Maven
 target/
+
+#other files
+.springBeans
+

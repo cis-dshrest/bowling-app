@@ -1,0 +1,15 @@
+language: java
+
+install: mvn clean install -DskipTests=true
+
+
+# blacklist
+branches:
+    except:
+        - master
+
+# whitelist
+branches:
+    only:
+        - develop
+

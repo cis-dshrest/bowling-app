@@ -1,5 +1,7 @@
-Exploratory testing
+Exploratory testing [![Build Status](https://magnum.travis-ci.com/private-pilot/exploratory-testing.svg?token=VcNtC8P2kZyxV3pM2rAy&branch=develop)](https://magnum.travis-ci.com/private-pilot/exploratory-testing)
 ===================
+
+
 
 *Exploratory testing* is different that most of the tests out there. It cannot be automated like unit testing and has to be done manually. - Testing Jenkins push again
 
