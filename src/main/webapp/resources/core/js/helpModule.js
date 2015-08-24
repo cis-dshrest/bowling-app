@@ -1,5 +1,5 @@
 /**
- * main.js
+ * helpModule.js
  * 
  * Date Created: 07/17/2015
  */
