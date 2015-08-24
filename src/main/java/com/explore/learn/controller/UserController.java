@@ -7,8 +7,10 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.CannotCreateTransactionException;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -41,7 +43,7 @@ public class UserController {
 		
 		// Authenticate
 		AuthCode authCode = userService.login(username, password);
-		System.out.println("authcode is: " + authCode);
+
 		if (authCode == AuthCode.USER) {
 			session.setAttribute("username",  username);
 			session.setAttribute("role", "user");
@@ -60,6 +62,13 @@ public class UserController {
 		}
 		return "login";
 
+	}
+	
+	@ExceptionHandler(CannotCreateTransactionException.class)
+	public ModelMap handleTransactionException() {
+		ModelMap model = new ModelMap("403");
+		model.addAttribute("errorMsg", "The database service is down at the moment. Please contact the admin to enable the service.");
+		return model;
 	}
 	
 	@RequestMapping(value = { "/logout" }, method = RequestMethod.GET)
@@ -105,8 +114,5 @@ public class UserController {
 		return "resetAccount";
 	}
 	
-	@RequestMapping(value = {"/creategame" }, method = RequestMethod.GET)
-	public String createGame(ModelMap model) {
-		return "creategame";
-	}
+	
 }

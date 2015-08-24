@@ -14,6 +14,7 @@
     <br>
     <br>
     <div class="alert alert-warning" role="alert">
+      <p>${errorMsg }</p>
       <strong>Sorry, you don't have access to this page. <a href="/Exploration">Return to the homepage.</a></strong>
     </div>
        

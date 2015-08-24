@@ -31,7 +31,7 @@ nav ul>li {
       <c:choose>
         <c:when test="${sessionScope.role != null}">
           <li><a href="/Exploration/user/profile">Profile</a></li>
-          <li><a href="/Exploration/user/creategame">Create Game</a></li>
+          <li><a href="/Exploration/user/game/new">Create Game</a></li>
         </c:when>
         <c:otherwise>
           <li><a href="/Exploration/login">Sign In</a></li>
