@@ -10,34 +10,44 @@
  */
 
 
-//global vars initialization
-var frame_no = [];
-var throw_no = [];
-var results = [[]];//new Array();
+/////////////////////////////////////////////////////////////////////////////////////////
+//
+//Global vars initialization
 
-/**
- * Ask user for confirmation before closing the page.
- */
-var formSubmitting = false;
-var setFormSubmitting = function() {
-  formSubmitting = true;
-};
+var usernames = [];
+var stillPlaying = []; //list of users that haven't finished 10 frames;
+
+
+// Final structure for storing player.results.
+var GameScores = {};
+GameScores.players = [];
+
+
+//Variables set when changing users. @see load_player(username)
+var results = [];
+
+//UI controllers
+var buttonObjs = null;
+var frameObjs = null;
+
+// End Global variable declarations
+/////////////////////////////////////////////////////////////////////////////////////////
+
 
 window.onload = function() {
   
-  //initialize variables.
-  initVars();
-  
-  window.addEventListener("beforeunload", function(e) {
-    var confirmationMessage = 'If you leave before completing the game, your scores will not be saved.';
+  //Initialize variables.
+  init_vars();
 
-    if (formSubmitting) {
-      return document.location = "/Exploration/user/game/new";
+  window.onbeforeunload = function (e) {
+    e = e || window.event;
+
+    // For IE and Firefox prior to version 4
+    if ((stillPlaying.length != 0) && e) {
+        e.returnValue = 'Sure?';
     }
-
-    (e || window.event).returnValue = confirmationMessage; //Gecko + IE
-    return confirmationMessage; //Gecko + Webkit, Safari, Chrome 
-  });
+  };
+    
 };
 
 
@@ -70,59 +80,48 @@ var QueryString = function () {
 
 
 
-
-
 /**
  * Initialize frame number and throw number for all players.
  */
-var initVars = function () {
+var init_vars = function () {
   
-
+  usernames = get_usernames();
   
-  
-  var playerHTMLObjs = $("p.user-info");
-  var re = /\(([^)]+)\)/;
-  for(var i = 0; i < playerHTMLObjs.length; i++) {
-    var playerUsername = playerHTMLObjs[i].innerHTML;
-    playerUsername = (re.exec(playerUsername))[1];
-    frame_no[playerUsername] = 1;
-    throw_no[playerUsername] = 1;
+  for(var i = 0; i < usernames.length; i++) {
+    var playerUsername = usernames[i];
     
-    console.log("initplayer:"+playerUsername);
-    console.log("frame_no[playerUsername]:"+ frame_no[playerUsername]);
+    var player = {};
+    player.username = usernames[i];
+    player.frame_no = 1;
+    player.throw_no = 1;
+    
+    player.results = [];
+    
+    GameScores.players.push(player);
   }
+    
+  stillPlaying = get_usernames();
+
 }
 
 
 /**
- * Calculates results.
+ * Calculates player.results.
  */
-function calc(op, player) {
+function calc(op, username) {
+
+  // Change player and set the variables. 
+  var player = load_player(username);
   
-  console.log("player:" + player);
   
-  //Set button,frame controls for the specific player
-  var buttonObjs = $("#bowling-calc-buttons-container-" + player);
-  var frameObjs = $("#bowling-calc-container-"+player+" .bowling-calc-score-table");
-  
-//  Make user finish a complete frame before letting other user go
-//  if(throw_no[player] < 2 ) {
-//    disable_other_players(player);
-//  }
-//  else {
-//    enable_players();
-//  }
-  
-  // First throw, reset results.
-  if (throw_no[player] == 1) {
-    results[frame_no[player]] = [];
-    console.log("results: " + results[frame_no[player]]);
-    
-    
-  } 
+  // First throw, reset player.results.  
+  if (player.throw_no == 1) {
+    player.results[player.frame_no] = [];
+    console.log("results: " + player.results[player.frame_no]);
+  }
   
   //second throw, enable spare
-  else if (throw_no[player] == 2) {
+  else if (player.throw_no == 2) {
     for (var j = 0; j < 10; j++) {
       buttonObjs.find("input[name='b-"+ j +"']").attr("disabled", false);
     }
@@ -132,15 +131,16 @@ function calc(op, player) {
   if (op == "1" || op == "2" || op == "3" || op == "4" || op == "5"
     || op == "6" || op == "7" || op == "8" || op == "9" || op == "0") {
 
-    console.log("frameno:" + frame_no[player] + " throwno:" + throw_no[player]);
-    results[frame_no[player]][throw_no[player]] = parseInt(op);
+    player.results[player.frame_no][player.throw_no] = parseInt(op);
     
-    console.log("results after op: " + results[frame_no[player]][throw_no[player]]);
-    
-    if ( throw_no[player] == 1) {
-      console.log("throw was 1");
-      frameObjs.find("#edit-frame"+ frame_no[player] + "-1").val(op);
-      throw_no[player]++;
+    // For each throw, set score in UI and increase throw number.
+    // Calculate the result on the 2nd throw.
+    if (player.throw_no == 1) {
+
+      frameObjs.find("#edit-frame"+ player.frame_no + "-1").val(op);
+      player.throw_no++;
+      
+      //Disable Strike and enable Spare. Also disable other buttons
       buttonObjs.find("input[name='b-X']").attr("disabled", true);
       buttonObjs.find("input[name='b-/']").attr("disabled", false);
       for (var k = parseInt(10 - op); k < 10; k++) {
@@ -148,46 +148,47 @@ function calc(op, player) {
       }
     }
     
-    else if (throw_no[player] == 2) {
-      
-      results[frame_no[player]]['status'] = 'no';
-      frameObjs.find("#edit-frame"+ frame_no[player] + "-2").val(op);
+    else if (player.throw_no == 2) {
+      console.log("throw 2");
+      player.results[player.frame_no]['status'] = 'no';
+      frameObjs.find("#edit-frame"+ player.frame_no + "-2").val(op);
     
-      if (frame_no[player] != 10) {
-        calculate_frame_result(player, parseInt(results[frame_no[player]][throw_no[player]]
-        + results[frame_no[player]][throw_no[player] - 1]));
-        throw_no[player]--;
-        frame_no[player]++;
+      if (player.frame_no != 10) {
+        calculate_frame_result(username, parseInt(player.results[player.frame_no][player.throw_no]
+        + player.results[player.frame_no][player.throw_no - 1]));
+        player.throw_no--;
+        player.frame_no++;
+        console.log("frame incremented");
         buttonObjs.find("input[name='b-/']").attr("disabled", true);
         buttonObjs.find("input[name='b-X']").attr("disabled", false);
       }
       
       else {
-        if (results[frame_no[player]]['1'] != 10 ) {
-          calculate_frame_result(player, parseInt(parseInt(results[frame_no[player]][throw_no[player]])
-              + parseInt(results[frame_no[player]][throw_no[player] - 1])));
+        if (player.results[player.frame_no]['1'] != 10 ) {
+          calculate_frame_result(username, parseInt(parseInt(player.results[player.frame_no][player.throw_no])
+              + parseInt(player.results[player.frame_no][player.throw_no - 1])));
           
-          end_game();
+          end_game(username);
         }
         else {
-          throw_no[player]++;
+          player.throw_no++;
         }
       }
     }
     
     else {
-      frameObjs.find("#edit-frame" + frame_no[player] + "-3").val(op);
+      frameObjs.find("#edit-frame" + player.frame_no + "-3").val(op);
       
-      calculate_frame_result(player, parseInt(parseInt(results[frame_no[player]][throw_no[player]])
-          + parseInt(results[frame_no[player]][throw_no[player] - 1])
-          + parseInt(results[frame_no[player]][throw_no[player] - 2])));
+      calculate_frame_result(username, parseInt(parseInt(player.results[player.frame_no][player.throw_no])
+          + parseInt(player.results[player.frame_no][player.throw_no - 1])
+          + parseInt(player.results[player.frame_no][player.throw_no - 2])));
       
-      if (frame_no[player] == 10) {
-        end_game(player);
+      if (player.frame_no == 10) {
+        end_game(username);
       }
       else {
-        throw_no[player] = 1;
-        frame_no[player]++;
+        player.throw_no = 1;
+        player.frame_no++;
         for (var i = 1; i < 10; i++) {
           buttonObjs.find("input[name='b-"+ i +"']").attr("disabled", false);
         }
@@ -200,36 +201,36 @@ function calc(op, player) {
   
   if (op == "X") {
     
-    if (frame_no[player] == 10) {
-      results[frame_no[player]][throw_no[player]] = '10';
+    if (player.frame_no == 10) {
+      player.results[player.frame_no][player.throw_no] = '10';
       
-      switch(throw_no[player]) {
+      switch(player.throw_no) {
       case 1 :
-        frameObjs.find("#edit-frame" + frame_no[player] + "-1").val('X');
+        frameObjs.find("#edit-frame" + player.frame_no + "-1").val('X');
         break;
       case 2 :
-        frameObjs.find("#edit-frame" + frame_no[player] + "-2").val('X');
+        frameObjs.find("#edit-frame" + player.frame_no + "-2").val('X');
         buttonObjs.find("input[name='b-/']").attr("disabled", true);
         break;
       case 3 :
-        frameObjs.find("#edit-frame" + frame_no[player] + "-3").val('X');
-        calculate_frame_result(player, parseInt(parseInt(results[frame_no[player]]['1'])
-            + parseInt(results[frame_no[player]]['2'])
-            + parseInt(results[frame_no[player]]['3'])));
-        end_game(player);
+        frameObjs.find("#edit-frame" + player.frame_no + "-3").val('X');
+        calculate_frame_result(username, parseInt(parseInt(player.results[player.frame_no]['1'])
+            + parseInt(player.results[player.frame_no]['2'])
+            + parseInt(player.results[player.frame_no]['3'])));
+        end_game(username);
         break;
       }
-      throw_no[player]++;
+      player.throw_no++;
     }
     else {
-      results[frame_no[player]]['status'] = 'X';
-      results[frame_no[player]][throw_no[player]] = '10';
-      results[frame_no[player]][throw_no[player] + 1] = '';
-      calculate_frame_result(player, parseInt(10));
-      frameObjs.find("#edit-frame" + frame_no[player] + "-1").val('');
-      frameObjs.find("#edit-frame" + frame_no[player] + "-2").val('X');
+      player.results[player.frame_no]['status'] = 'X';
+      player.results[player.frame_no][player.throw_no] = '10';
+      player.results[player.frame_no][player.throw_no + 1] = '';
+      calculate_frame_result(username, parseInt(10));
+      frameObjs.find("#edit-frame" + player.frame_no + "-1").val('');
+      frameObjs.find("#edit-frame" + player.frame_no + "-2").val('X');
       
-      frame_no[player]++;
+      player.frame_no++;
       buttonObjs.find("input[name='b-/']").attr("disabled", true);
       
     }
@@ -239,34 +240,34 @@ function calc(op, player) {
   
   if (op == "/") {
     
-    if (frame_no[player] == 10 ) {
-      results[frame_no[player]][throw_no[player]] = parseInt(10 - parseInt(results[frame_no[player]][throw_no[player] - 1]));
+    if (player.frame_no == 10 ) {
+      player.results[player.frame_no][player.throw_no] = parseInt(10 - parseInt(player.results[player.frame_no][player.throw_no - 1]));
       
-      switch(throw_no[player]) {
+      switch(player.throw_no) {
       case 2 :
-        frameObjs.find("#edit-frame" + frame_no[player] + "-2").val("/");
+        frameObjs.find("#edit-frame" + player.frame_no + "-2").val("/");
         buttonObjs.find("input[name='b-X']").attr("disabled", false);
         buttonObjs.find("input[name='b-/']").attr("disabled", true);
-        throw_no[player]++;
+        player.throw_no++;
         break;
       case 3 :
-        frameObjs.find("#edit-frame" + frame_no[player] + "-3").val("/");
-        calculate_frame_result(player, parseInt(parseInt(results[frame_no[player]]['1'])
-            + parseInt(results[frame_no[player]]['2'])
-            + parseInt(results[frame_no[player]]['3'])));
-        end_game(player);
+        frameObjs.find("#edit-frame" + player.frame_no + "-3").val("/");
+        calculate_frame_result(username, parseInt(parseInt(player.results[player.frame_no]['1'])
+            + parseInt(player.results[player.frame_no]['2'])
+            + parseInt(player.results[player.frame_no]['3'])));
+        end_game(username);
         break;
       }
     }
     
     else {
-      results[frame_no[player]]['status'] = '/';
-      results[frame_no[player]][throw_no[player]] = parseInt(10 - results[frame_no[player]][throw_no[player] - 1]);
-      calculate_frame_result(player, parseInt(10));
-      frameObjs.find("#edit-frame" + frame_no[player] + "-2").val("/");
+      player.results[player.frame_no]['status'] = '/';
+      player.results[player.frame_no][player.throw_no] = parseInt(10 - player.results[player.frame_no][player.throw_no - 1]);
+      calculate_frame_result(username, parseInt(10));
+      frameObjs.find("#edit-frame" + player.frame_no + "-2").val("/");
       
-      frame_no[player]++;
-      throw_no[player]--;
+      player.frame_no++;
+      player.throw_no--;
       buttonObjs.find("input[name='b-X']").attr("disabled", false);
       buttonObjs.find("input[name='b-/']").attr("disabled", true);
     }
@@ -275,103 +276,96 @@ function calc(op, player) {
   }
 }
 
-function calculate_frame_result(player, frame_res) {
+function calculate_frame_result(username, frame_res) {
   
-  console.log("frame_no calculate: " + frame_no[player]);
-  console.log("frame_no result: " + frame_res);
+  //Set player variables
+  var player = load_player(username);
   
-  switch (frame_no[player]) {
+  console.log("player.frame_no calculate: " + player.frame_no);
+  console.log("player.frame_no result: " + frame_res);
+  
+  switch (player.frame_no) {
   case 1 :
-    results[frame_no[player]]['result'] = frame_res;
+    player.results[player.frame_no]['result'] = frame_res;
     break;
   case 2 :
-    if (results[frame_no[player] - 1]['status'] == 'X') {
-      results[frame_no[player] - 1]['result'] = parseInt(results[frame_no[player] - 1]['result'])
+    if (player.results[player.frame_no - 1]['status'] == 'X') {
+      player.results[player.frame_no - 1]['result'] = parseInt(player.results[player.frame_no - 1]['result'])
       + frame_res;
-    } else if (results[frame_no[player] - 1]['status'] == '/') {
-      results[frame_no[player] - 1]['result'] = parseInt(results[frame_no[player] - 1]['result'])
-      + parseInt(results[frame_no[player]]['1']);
+    } else if (player.results[player.frame_no - 1]['status'] == '/') {
+      player.results[player.frame_no - 1]['result'] = parseInt(player.results[player.frame_no - 1]['result'])
+      + parseInt(player.results[player.frame_no]['1']);
     }
-    results[frame_no[player]]['result'] = parseInt(results[frame_no[player] - 1]['result']
+    player.results[player.frame_no]['result'] = parseInt(player.results[player.frame_no - 1]['result']
     + frame_res);
     break;
-  default :
-    if (results[frame_no[player] - 1]['status'] == 'X') {
-      if (results[frame_no[player] - 2]['status'] == 'X') {
-        results[frame_no[player] - 2]['result'] = parseInt(results[frame_no[player] - 2]['result'])
-        + parseInt(results[frame_no[player]]['1']);
-        results[frame_no[player] - 1]['result'] = parseInt(results[frame_no[player] - 1]['result'])
-        + parseInt(results[frame_no[player]]['1']);
+    
+  default : 
+    if (player.results[player.frame_no - 1]['status'] == 'X') {
+      if (player.results[player.frame_no - 2]['status'] == 'X') {
+        player.results[player.frame_no - 2]['result'] = parseInt(player.results[player.frame_no - 2]['result'])
+            + parseInt(player.results[player.frame_no]['1']);
+        player.results[player.frame_no - 1]['result'] = parseInt(player.results[player.frame_no - 1]['result'])
+            + parseInt(player.results[player.frame_no]['1']);
       }
-      results[frame_no[player] - 1]['result'] = parseInt(results[frame_no[player] - 1]['result'])
-      + parseInt(results[frame_no[player]]['1'])
-      + (results[frame_no[player]]['2'] == ''
-        ? parseInt(0)
-            : parseInt(results[frame_no[player]]['2']));
-    } else if (results[frame_no[player] - 1]['status'] == '/') {
-      results[frame_no[player] - 1]['result'] = parseInt(results[frame_no[player] - 1]['result'])
-      + parseInt(results[frame_no[player]]['1']);
+
+      player.results[player.frame_no - 1]['result'] = parseInt(player.results[player.frame_no - 1]['result'])
+          + parseInt(player.results[player.frame_no]['1'])
+          + (player.results[player.frame_no]['2'] == '' ? parseInt(0)
+              : parseInt(player.results[player.frame_no]['2']));
     }
-  results[frame_no[player]]['result'] = parseInt(results[frame_no[player] - 1]['result']
-  + frame_res);
-  break;
+
+    else if (player.results[player.frame_no - 1]['status'] == '/') {
+      player.results[player.frame_no - 1]['result'] = parseInt(player.results[player.frame_no - 1]['result'])
+          + parseInt(player.results[player.frame_no]['1']);
+    }
+
+    player.results[player.frame_no]['result'] = parseInt(player.results[player.frame_no - 1]['result']
+        + frame_res);
+    break;
   }
-  update_frame_result(player);
+  
+  update_frame_result(username);
   return;
 }
 
-function update_frame_result(player) {
+function update_frame_result(username) {
 
-  var buttonObjs = $("#bowling-calc-buttons-container-" + player);
-  var frameObjs = $("#bowling-calc-container-"+player+" .bowling-calc-score-table");
+  var player = load_player(username);
   
-  switch (frame_no[player]) {
+  switch (player.frame_no) {
   case 1 :
-    frameObjs.find("input[name='frame" + frame_no[player] + "-res']")
-      .val(results[frame_no[player]]['result']);
+    frameObjs.find("input[name='frame" + player.frame_no + "-res']")
+      .val(player.results[player.frame_no]['result']);
     break;
   case 2 :
-    frameObjs.find("input[name='frame" + parseInt(frame_no[player] -1) + "-res']")
-    .val(results[frame_no[player] - 1]['result']);
+    frameObjs.find("input[name='frame" + parseInt(player.frame_no -1) + "-res']")
+    .val(player.results[player.frame_no - 1]['result']);
     
-    frameObjs.find("input[name='frame" + frame_no[player] + "-res']")
-    .val(results[frame_no[player]]['result']);
+    frameObjs.find("input[name='frame" + player.frame_no + "-res']")
+    .val(player.results[player.frame_no]['result']);
     break;
   default :
-    frameObjs.find("input[name='frame" + parseInt(frame_no[player] - 2) + "-res']")
-    .val(results[frame_no[player] - 2]['result']);
+    frameObjs.find("input[name='frame" + parseInt(player.frame_no - 2) + "-res']")
+    .val(player.results[player.frame_no - 2]['result']);
   
-    frameObjs.find("input[name='frame" + parseInt(frame_no[player] - 1) + "-res']")
-    .val(results[frame_no[player] - 1]['result']);
+    frameObjs.find("input[name='frame" + parseInt(player.frame_no - 1) + "-res']")
+    .val(player.results[player.frame_no - 1]['result']);
     
-    frameObjs.find("input[name='frame" + frame_no[player] + "-res']")
-    .val(results[frame_no[player]]['result']);
+    frameObjs.find("input[name='frame" + player.frame_no + "-res']")
+    .val(player.results[player.frame_no]['result']);
   break;
   }
-  frameObjs.find("input[name='game_result']").val(results[frame_no[player]]['result']);
+  frameObjs.find("input[name='game_result']").val(player.results[player.frame_no]['result']);
   return;
 }
 
-function end_game(player) {
-  
-  var buttonObjs = $("#bowling-calc-buttons-container-" + player);
-  
-  for (var i = 0; i < 10; i++) {
-    buttonObjs.find("input[name='b-"+i+"']").attr("disabled", true);
-  }
-  
-  buttonObjs.find("input[name='b-X']").attr("disabled", true);
-  buttonObjs.find("input[name='b-/']").attr("disabled", true);
 
-}
 
-function disable_other_players(player) {
-
-  
-  var usernames = get_usernames();
+function disable_other_players(username) {
   
   for (var i = 0; i < usernames.length; i++) {
-    if (usernames[i] !== player) {
+    if (usernames[i] !== username) {
       var buttonObjs = $("#bowling-calc-buttons-container-" + usernames[i]);
       for (var j = 0; j < 10; j++) {
         buttonObjs.find("input[name='b-"+j+"']").attr("disabled", true);
@@ -384,8 +378,7 @@ function disable_other_players(player) {
 }
 
 function enable_players() {
-  var usernames = get_usernames();
-    
+
   for (var i = 0; i < usernames.length; i++) {
     var buttonObjs = $("#bowling-calc-buttons-container-" + usernames[i]);
     for (var j = 0; j < 10; j++) {
@@ -417,34 +410,176 @@ function get_usernames() {
 }
 
 function reset_game() {
-  initVars();
   
-  var usernames = get_usernames();
-  for( var i = 0; i < usernames.length; i++) {
-    frame_no[usernames[i]] = 1;
-    throw_no[usernames[i]] = 1;
+  var result = confirm("Are you sure? Your scores will not be saved.");
+  
+  if (result) {
+    initVars();
     
-    var buttonObjs = $("#bowling-calc-buttons-container-" + usernames[i]);
-    var frameObjs = $("#bowling-calc-container-"+usernames[i]+" .bowling-calc-score-table");
-    
-    for(var j = 1; j <= 10; j++) {
-      //throws 
-      frameObjs.find("#edit-frame" + j + "-1").val('0');
-      frameObjs.find("#edit-frame" + j + "-2").val('0');
-      frameObjs.find("#edit-frame" + j + "-3").val('0');
+    for( var i = 0; i < usernames.length; i++) {
+      player.frame_no = 1;
+      player.throw_no = 1;
       
-      //results
-      frameObjs.find("input[name='frame" + j + "-res']").val('0');
+      var buttonObjs = $("#bowling-calc-buttons-container-" + usernames[i]);
+      var frameObjs = $("#bowling-calc-container-"+usernames[i]+" .bowling-calc-score-table");
       
-      //buttons
-      buttonObjs.find("input[name='b-" + (j-1) + "']").attr("disabled", false);
+      for(var j = 1; j <= 10; j++) {
+        //throws 
+        frameObjs.find("#edit-frame" + j + "-1").val('0');
+        frameObjs.find("#edit-frame" + j + "-2").val('0');
+        frameObjs.find("#edit-frame" + j + "-3").val('0');
+        
+        //player.results
+        frameObjs.find("input[name='frame" + j + "-res']").val('0');
+        
+        //buttons
+        buttonObjs.find("input[name='b-" + (j-1) + "']").attr("disabled", false);
+      }
+      
+      frameObjs.find("input[name='game_result']").val('0');    
+      frameObjs.find("#edit-frames10-3").val('');
+      buttonObjs.find("input[name='b-X']").attr("disabled", false);
+      buttonObjs.find("input[name='b-/']").attr("disabled", true);
+      player.results.length = 0;
     }
-    
-    frameObjs.find("input[name='game_result']").val('0');    
-    frameObjs.find("#edit-frames10-3").val('');
-    buttonObjs.find("input[name='b-X']").attr("disabled", false);
-    buttonObjs.find("input[name='b-/']").attr("disabled", true);
-    results.length = 0;
+  }
+
+}
+
+
+/**
+ * Show a message when all players finish their games and let 
+ * the players save the scores if they wish to do so.
+ * 
+ * @param username
+ */
+function end_game(username) {
+  console.log("end game");
+  var buttonObjs = $("#bowling-calc-buttons-container-" + username);
+  
+  for (var i = 0; i < 10; i++) {
+    buttonObjs.find("input[name='b-"+i+"']").attr("disabled", true);
   }
   
+  buttonObjs.find("input[name='b-X']").attr("disabled", true);
+  buttonObjs.find("input[name='b-/']").attr("disabled", true);
+  
+  
+  //remove player from ongoing games since their game is over
+  var index = stillPlaying.indexOf(username);
+  stillPlaying.splice(index, 1);
+  
+  
+  //if all games are over, show a message and send result over to server.
+  if (stillPlaying.length == 0 ) {
+    $("#gameFinished").show();
+    var oldmsg = $("#gameFinished").html();
+    if (usernames.length > 1) {
+      winner = get_winner();
+      $("#gameFinished").html("<strong>Congratulations " + winner + ". You win! </strong><br>Click the save icon to save your scores. " + oldmsg);
+    }
+    else {
+      $("#gameFinished").html("Game completed. Click the save icon to save your scores. " + oldmsg);
+    }
+    
+  }
+  
+  $("#btnGameFinished").click(function() {
+    send_results();
+  });
+  
 }
+
+
+function get_winner() {
+  
+  var scores = [];
+  for(var i = 0; i < usernames.length; i++) {
+    var frameObjs = $("#bowling-calc-container-"+usernames[i]+" .bowling-calc-score-table");
+    scores[usernames[i]] = parseInt(frameObjs.find("input[name='game_result']").val());
+  }
+  
+  var max = 0;
+  var maxUser = "";
+  for (var i = 0; i < usernames.length; i++) {
+    if (scores[usernames[i]] >= max) {
+      max = scores[usernames[i]];
+      maxUser = usernames[i];
+      
+    }
+  }
+  
+  return maxUser;
+}
+
+/**
+ * Finds the player object that is bowling with their username.
+ * 
+ * @param username
+ * @returns player object
+ */
+function load_player(username) {
+  
+  var player = {};
+  for(var i = 0; i < GameScores.players.length; i++) {
+    if(GameScores.players[i].username == username) {
+      player = GameScores.players[i];
+      break;
+    }
+  }
+  
+  //Set UI controllers
+  buttonObjs = $("#bowling-calc-buttons-container-" + username);
+  frameObjs = $("#bowling-calc-container-"+username+" .bowling-calc-score-table");
+  
+  return player;
+}
+
+
+/**
+ * Send results to the server as JSON with ajax request to be saved in a database.
+ */
+function send_results() {
+  
+  GameScores.gameTitle = QueryString.gameTitle;
+  GameScores.players = [];
+
+  for(var i = 0; i < usernames.length; i++) {
+    var frameObjs = $("#bowling-calc-container-"+usernames[i]+" .bowling-calc-score-table");
+
+    var player = {};
+    player.username = usernames[i];
+    player.frames = [];
+    
+    for(var j = 1; j <= 10; j++) {
+      var frame = {};
+      frame.throw_1 = frameObjs.find("#edit-frame" + j + "-1").val();
+      frame.throw_2 = frameObjs.find("#edit-frame" + j + "-2").val();
+      frame.frame_res = frameObjs.find("input[name='frame" + j + "-res']").val();
+      
+      player.frames.push(frame);
+
+    }
+    
+    GameScores.players.push(player);
+ 
+  }
+  
+  console.log(JSON.stringify(GameScores));
+  
+  //Make ajax call
+  $.ajax({
+    type: "POST",
+    contentType : 'application/json; charset=utf-8',
+    dataType : 'text',
+    url: "/Exploration/user/game/saveScore",
+    data: JSON.stringify(GameScores), 
+    success :function(result) {
+      console.log(result);
+      var reportsUrl = window.location.origin + "/Exploration/reports";
+      window.location.replace(reportsUrl);
+    }
+  });
+  
+}
+

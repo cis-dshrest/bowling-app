@@ -34,8 +34,9 @@ Design credit: http://www.sportcalculators.com/bowling-score-calculator
       <input class="btn btn-primary" type="button" name="b-new"
         value="Reset Game" onclick="reset_game()" />
     </div>
-
-
+    <br><br>
+    <div id="gameFinished" class="alert alert-success" style="display: none;"><button id='btnGameFinished' class='btn btn-default btn-lg' ><span class='glyphicon glyphicon-floppy-save'></span></button></div>
+    <br>
     <c:forEach items="${players}" var="player">
       <div id="generate-bowling-score-calculator">
         
