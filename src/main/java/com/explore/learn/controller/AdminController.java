@@ -56,7 +56,6 @@ public class AdminController {
 		else {
 			return "redirect:/403";
 		}
-		
 	}
 	
 	@RequestMapping(value = { "/edit-{username}-user" }, method = RequestMethod.GET)

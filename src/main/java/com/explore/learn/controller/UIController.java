@@ -133,7 +133,6 @@ public class UIController {
 	public String registrationSuccess(ModelMap model) {
 		return "registerSuccess";
 	}
-		
 	
 	@RequestMapping(value = {"/403"}, method = RequestMethod.GET)
 	public String accessDenied(ModelMap model) {

@@ -21,13 +21,14 @@ nav ul>li {
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="<%=request.getContextPath()%>">Exploratory Testing</a>
+    <a class="navbar-brand" href="<%=request.getContextPath()%>">LETS</a>
   </div>
   
   <div id="navbar" class="navbar-collapse collapse">
     <ul class="nav navbar-nav">
       
       <li><a href="/Exploration/about">About</a></li>
+      <li><a href="/Exploration/reports">Reports</a></li>
       <c:choose>
         <c:when test="${sessionScope.role != null}">
           <li><a href="/Exploration/user/profile">Profile</a></li>

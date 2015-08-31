@@ -21,7 +21,7 @@ insert ignore into helpmessage(id, title, body) values(null, "Edit Users", "Admi
 insert ignore into helpmessage(id, title, body) values(null, "Create Game", "Add your friends and create a game.");
 
 
-create table if not exists user
+create table if not exists users
 (	
 	id int(11) unsigned NOT NULL AUTO_INCREMENT,
     firstname VARCHAR(255) NOT NULL,
@@ -34,6 +34,6 @@ create table if not exists user
     UNIQUE KEY (username)
 );
 
-insert ignore into user(firstname, lastname, username, password) values("tom", "hanks", "testuser", "password");
-insert ignore into user(firstname, lastname, username, password) values("ed", "eddy", "edddy", "password");
-insert ignore into user(firstname, lastname, username, password, role) values("kumar", "shrestha", "kumar", "kumar", "ADMIN");
+insert ignore into users(firstname, lastname, username, password) values("tom", "hanks", "testuser", "password");
+insert ignore into users(firstname, lastname, username, password) values("ed", "eddy", "edddy", "password");
+insert ignore into users(firstname, lastname, username, password, role) values("kumar", "shrestha", "kumar", "kumar", "ADMIN");

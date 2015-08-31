@@ -32,6 +32,11 @@ public class UserController {
 	
 	@Autowired
 	UserService userService;
+	
+	@RequestMapping(value = { "/"}, method = RequestMethod.GET)
+	public String urlUser() {
+		return "redirect:/user/profile";
+	}
 
 	@RequestMapping(value = { "/login" }, method = RequestMethod.POST)
 	public String executeLogin(HttpServletRequest request, HttpServletResponse response,

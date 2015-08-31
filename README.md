@@ -29,7 +29,7 @@ We're trying to create a bowling application as a way to teach exploratory testi
 
 ###Tools
 --------
-The tools that we're using are given below:
+The tools used to build the application is given below.
 - java 8
 - apache tomcat 8
 - selenium 2.46.0
@@ -46,7 +46,7 @@ The tools that we're using are given below:
 ###To run
 ---------
 1. Get eclipse [maven plugin](http://www.eclipse.org/m2e/)  
-2. Get [apache tomcat](http://tomcat.apache.org/download-80.cgi)  
+2. Get [apache tomcat 8](http://tomcat.apache.org/download-80.cgi)  
 3. Get [mysql 5.6](http://dev.mysql.com/downloads/mysql/)
 
 4. **Start the mysql server**
