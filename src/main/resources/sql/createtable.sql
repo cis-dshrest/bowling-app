@@ -37,3 +37,13 @@ create table if not exists users
 insert ignore into users(firstname, lastname, username, password) values("tom", "hanks", "testuser", "password");
 insert ignore into users(firstname, lastname, username, password) values("ed", "eddy", "edddy", "password");
 insert ignore into users(firstname, lastname, username, password, role) values("kumar", "shrestha", "kumar", "kumar", "ADMIN");
+
+
+create table if not exists gamescores
+(
+	id int(11) unsigned NOT NULL AUTO_INCREMENT,
+    gametitle VARCHAR(255) NOT NULL,
+    jsondata TEXT NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY (gametitle)
+);

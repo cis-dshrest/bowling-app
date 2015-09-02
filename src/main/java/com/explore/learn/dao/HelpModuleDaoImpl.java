@@ -12,19 +12,22 @@ import com.explore.learn.model.HelpModule;
 @Repository("helpModuleDao")
 public class HelpModuleDaoImpl extends AbstractDao<Integer, HelpModule> implements HelpModuleDao {
 
+	@Override
 	public HelpModule findHelpModuleByPageTitle(String pageTitle) {
 		Criteria criteria = getSession().createCriteria(HelpModule.class);
 		criteria.add(Restrictions.eq("pageTitle", pageTitle));
 		return (HelpModule) criteria.uniqueResult();		
 	}
-
+	
+	@Override
 	public void saveHelpModule(HelpModule helpModule) {
 		persist(helpModule);	
 	}
-
+	
+	@Override
 	public void deleteHelpModuleByPageTitle(String pageTitle) {
 		Query query = getSession().createSQLQuery("delete from helpmessage where title = :title");
-		query.setString("pageTitle", pageTitle);
+		query.setString("title", pageTitle);
 		query.executeUpdate();
 		
 	}
