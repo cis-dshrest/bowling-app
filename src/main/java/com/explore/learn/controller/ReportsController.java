@@ -103,10 +103,13 @@ public class ReportsController {
 	
 	@RequestMapping(value = {"/gameScores/{gameTitle:.+}"}, method = RequestMethod.GET)
 	public String getOneGameScore(@PathVariable String gameTitle, ModelMap model) {
-		System.out.println("gtitle:" + gameTitle);
+
 		GameScore gs = gameScoreService.findbyGameName(gameTitle);
 		String title = "Game " + gameTitle;
 		
+		//Add format flag to run javascript
+		model.addAttribute("fmtFlag", "true");
+		model.addAttribute("display", "block");
 		model.addAttribute("title", title);
 		model.addAttribute("report", gs.getData());
 		
