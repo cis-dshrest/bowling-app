@@ -7,20 +7,23 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 
 @Entity
 @Table(name = "gamescores")
-public class GameScores {
+public class GameScore {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name = "gametitle")
+	@NotEmpty
+	@Column(name = "gametitle", nullable = false)
 	private String gameTitle;
 	
-	@Column(name = "data")
-	private String data;
+	@Column(name = "jsondata", nullable = false)
+	private String jsondata;
 
 	public int getId() {
 		return id;
@@ -39,11 +42,11 @@ public class GameScores {
 	}
 
 	public String getData() {
-		return data;
+		return jsondata;
 	}
 
-	public void setData(String data) {
-		this.data = data;
+	public void setData(String jsondata) {
+		this.jsondata = jsondata;
 	}
 	
 

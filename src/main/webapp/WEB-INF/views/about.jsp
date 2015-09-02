@@ -30,6 +30,7 @@
         LETS was created to teach exploratory testing in a controlled environment. This application gives testers a starting point to go through the testing
         process.
       </p>
+      <p><a href="https://en.wikipedia.org/wiki/Exploratory_testing">Find more about Exploratory Testing</a></p>
     </div>
 
   

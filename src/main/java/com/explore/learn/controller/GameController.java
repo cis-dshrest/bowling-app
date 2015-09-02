@@ -2,6 +2,7 @@ package com.explore.learn.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.explore.learn.model.GameScores;
+import com.explore.learn.model.GameScore;
 import com.explore.learn.model.User;
+import com.explore.learn.service.GameScoreService;
 import com.explore.learn.service.UserService;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -30,6 +32,9 @@ public class GameController {
 	@Autowired
 	UserService userService;
 
+	@Autowired
+	GameScoreService gameScoreService;
+	
 	
 	/** 
 	 * Show list of users to add to the game. Remove the current user from
@@ -91,12 +96,20 @@ public class GameController {
 		JsonElement element = parser.parse(gameScores);
 		JsonObject game = element.getAsJsonObject();
 		
-		GameScores gs = new GameScores();
-		gs.setGameTitle(game.get("gameTitle").getAsString());
+		GameScore gs = new GameScore();
+		
+		//Get time stamp for unique game name
+		String timeStamp = new SimpleDateFormat("-yyyy.MM.dd.HH.mm.ss").format(System.currentTimeMillis());
+		
+		String gamename = game.get("gameTitle").getAsString() + timeStamp;
+		
+		gs.setGameTitle(gamename);
 		gs.setData(gameScores);
 		
-		System.out.println("gamescores title: " + gs.getGameTitle());
+		//save the game score to the database
+		gameScoreService.saveGameScore(gs);
 		
+		//send a success message to the ajax caller
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		out.println("success");
