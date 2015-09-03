@@ -43,7 +43,7 @@ $(document).ready(function() {
       <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
         <li><a href="/Exploration/reports/gameScores">Game Scores</a></li>
         <li><a href="/Exploration/reports/listUsers">List of Registered Users</a></li>
-        <li><a href="#">List of Admins</a></li>
+        <li><a href="/Exploration/reports/listAdmins">List of Admins</a></li>
       </ul>
     </div>
     <br><br>

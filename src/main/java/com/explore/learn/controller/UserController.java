@@ -33,7 +33,7 @@ public class UserController {
 	@Autowired
 	UserService userService;
 	
-	@RequestMapping(value = { "/"}, method = RequestMethod.GET)
+	@RequestMapping(value = { ""}, method = RequestMethod.GET)
 	public String urlUser() {
 		return "redirect:/user/profile";
 	}
@@ -90,7 +90,7 @@ public class UserController {
 		String username = (String) session.getAttribute("username");
 		
 		User user = userService.findByUsername(username);
-		String realName = user.getFirstName() + " " + user.getLastName();		
+		String realName = user.getFirstName() + "%s " + user.getLastName();		
 		model.addAttribute("realName", realName);
 		model.addAttribute("user", user);
 		return "profile";

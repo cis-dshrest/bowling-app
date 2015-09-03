@@ -414,7 +414,7 @@ function reset_game() {
   var result = confirm("Are you sure? Your scores will not be saved.");
   
   if (result) {
-    initVars();
+    init_vars();
     
     for( var i = 0; i < usernames.length; i++) {
       player.frame_no = 1;
@@ -474,14 +474,19 @@ function end_game(username) {
   if (stillPlaying.length == 0 ) {
     $("#gameFinished").show();
     var oldmsg = $("#gameFinished").html();
+    
+    
+    //If there is more than one player, get the winner. 
+    //Look at get_winner() to get the actual winner. 
     if (usernames.length > 1) {
-      winner = get_winner();
+      var winner = usernames[0]; //get_winner();
+
       $("#gameFinished").html("<strong>Congratulations " + winner + ". You win! </strong><br>Click the save icon to save your scores. " + oldmsg);
     }
     else {
       $("#gameFinished").html("Game completed. Click the save icon to save your scores. " + oldmsg);
     }
-    
+
   }
   
   $("#btnGameFinished").click(function() {
@@ -490,7 +495,11 @@ function end_game(username) {
   
 }
 
-
+/**
+ * Gets the maximum score and returns the username associated with that score
+ * 
+ * @returns {String}
+ */
 function get_winner() {
   
   var scores = [];

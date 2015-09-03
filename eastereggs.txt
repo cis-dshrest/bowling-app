@@ -1,0 +1,18 @@
+easter eggs
+
+1. "sing in" instead of "sign in"
+
+2. when user is signed in, they can still register by changing url
+   (to fix: don't let authenticated users access register.)
+
+   2.1 Same thing with /user/game/new and /user/game/view
+
+
+
+3. Return winner is not the currect winner. It only returns the first username in the list.
+   Hint: A function to calculate winner is already present in the javascript(get_winner()). 
+
+
+4. Extra character in real name in the profile page.
+
+5. Exra html code in the home page and the profile page.

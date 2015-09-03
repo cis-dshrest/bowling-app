@@ -1,5 +1,8 @@
 #Ignoring files and folders
 .classpath
+.tern-project
+.springBeans
+
 bin/
 
 # Ignoring binaries

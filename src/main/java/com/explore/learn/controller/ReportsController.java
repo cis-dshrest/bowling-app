@@ -71,6 +71,44 @@ public class ReportsController {
 		return "reports";
 	}
 	
+	@RequestMapping(value = {"/listAdmins"}, method = RequestMethod.GET)
+	public String listAdmins(ModelMap model) {
+		
+		List<User> userList = userService.findAllUsers();
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("<table class='table'>" +
+	        "<tr>\n" +
+	          "  <td>First Name</td>\n" +
+	          "  <td>Last Name</td>\n" +
+	          "  <td>Username</td>\n" +
+	          "  <td>Role</td>\n" +
+	          "  <td>Active?</td>\n" +
+	        "</tr>\n"
+	    );
+		
+		for (User u : userList) {
+			if (u.getRole().equals("ADMIN")) {
+				sb.append("<tr>\n");
+				sb.append("  <td>" + u.getFirstName() + "</td>\n");
+				sb.append("  <td>" + u.getLastName() + "</td>\n");
+				sb.append("  <td>" + u.getUsername() + "</td>\n");
+				sb.append("  <td>" + u.getRole() + "</td>\n");
+				sb.append("  <td>" + u.getIsActive() + "</td>\n");
+				sb.append("</tr>\n");
+			}
+			
+		}
+		sb.append("</table>");
+		
+		model.addAttribute("title", "List of Registered Users");
+		model.addAttribute("report", sb.toString());
+		
+		//show the div
+		model.addAttribute("display", "block");
+		return "reports";
+	}
+	
 	@RequestMapping(value = {"/gameScores"}, method = RequestMethod.GET)
 	public String getGameScores(ModelMap model) {
 		

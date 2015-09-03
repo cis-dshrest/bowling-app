@@ -4,6 +4,18 @@
 <!-- javascript and css -->
 <%@include file="includes.jsp"%>
 
+
+<script>
+function validate() {
+
+  var gameTitle = $("#gameTitle").val();
+
+  if (gameTitle.length == 0) {
+    $("#emptyTitle").html("Please enter a game title");
+    return false;
+  }
+}
+</script>
 </head>
 
 <body>
@@ -20,12 +32,13 @@
     <br>
 
     <form class="" action='<c:url value="/user/game/view" />'
-      method="GET">
+      onsubmit="return validate()" method="GET">
 
       <!-- Game Title -->
       <div>
         <label class=" " for="gameTitle">Game Title: </label>
         <input class=" " type="text" id="gameTitle" name="gameTitle"/>
+        <div id="emptyTitle" style="color: red"></div>
       </div>
       <br>
       <h5>Add other players:</h5>

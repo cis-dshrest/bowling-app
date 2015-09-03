@@ -17,11 +17,10 @@
     <a href="/Exploration/user/resetaccount">Reset Account</a>
     <br>
     <h2>Reset Account</h2>
-  
-    <!--  Help module -->
-    <div id="helpbox">
-      <%@include file="help.jsp"%>
-    </div>
+    <p>
+      If you cannot remember your username, password or would like to reset your account password, please contact an admin.
+      You can find a <a href="/Exploration/reports/listAdmins">list of admins here</a>
+    </p>
     
   </div>
 

@@ -107,19 +107,5 @@ A checklist of what we need to accomplish:
 ###Step 2
 ---------
 
-
-####The scoring system
----
-
-Logic:
-
-Basically you add the number of pins knocked down.
-
-For special cases:
-
-a. Strike
-
-	- 10 points awarded for knocking down all pins.
-	- 
-	
-b. Spare
+Implement a bowling scoring system for multiple users in javascript.
+ 
