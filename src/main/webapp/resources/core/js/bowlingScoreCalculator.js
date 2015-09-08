@@ -44,7 +44,7 @@ window.onload = function() {
 
     // For IE and Firefox prior to version 4
     if ((stillPlaying.length != 0) && e) {
-        e.returnValue = 'Sure?';
+        e.returnValue = 'Your game scores will be lost.';
     }
   };
     
@@ -117,7 +117,7 @@ function calc(op, username) {
   // First throw, reset player.results.  
   if (player.throw_no == 1) {
     player.results[player.frame_no] = [];
-    console.log("results: " + player.results[player.frame_no]);
+//    console.log("results: " + player.results[player.frame_no]);
   }
   
   //second throw, enable spare
@@ -149,7 +149,6 @@ function calc(op, username) {
     }
     
     else if (player.throw_no == 2) {
-      console.log("throw 2");
       player.results[player.frame_no]['status'] = 'no';
       frameObjs.find("#edit-frame"+ player.frame_no + "-2").val(op);
     
@@ -158,7 +157,6 @@ function calc(op, username) {
         + player.results[player.frame_no][player.throw_no - 1]));
         player.throw_no--;
         player.frame_no++;
-        console.log("frame incremented");
         buttonObjs.find("input[name='b-/']").attr("disabled", true);
         buttonObjs.find("input[name='b-X']").attr("disabled", false);
       }
@@ -281,8 +279,6 @@ function calculate_frame_result(username, frame_res) {
   //Set player variables
   var player = load_player(username);
   
-  console.log("player.frame_no calculate: " + player.frame_no);
-  console.log("player.frame_no result: " + frame_res);
   
   switch (player.frame_no) {
   case 1 :
@@ -411,39 +407,8 @@ function get_usernames() {
 
 function reset_game() {
   
-  var result = confirm("Are you sure? Your scores will not be saved.");
+  location.reload(); 
   
-  if (result) {
-    init_vars();
-    
-    for( var i = 0; i < usernames.length; i++) {
-      player.frame_no = 1;
-      player.throw_no = 1;
-      
-      var buttonObjs = $("#bowling-calc-buttons-container-" + usernames[i]);
-      var frameObjs = $("#bowling-calc-container-"+usernames[i]+" .bowling-calc-score-table");
-      
-      for(var j = 1; j <= 10; j++) {
-        //throws 
-        frameObjs.find("#edit-frame" + j + "-1").val('0');
-        frameObjs.find("#edit-frame" + j + "-2").val('0');
-        frameObjs.find("#edit-frame" + j + "-3").val('0');
-        
-        //player.results
-        frameObjs.find("input[name='frame" + j + "-res']").val('0');
-        
-        //buttons
-        buttonObjs.find("input[name='b-" + (j-1) + "']").attr("disabled", false);
-      }
-      
-      frameObjs.find("input[name='game_result']").val('0');    
-      frameObjs.find("#edit-frames10-3").val('');
-      buttonObjs.find("input[name='b-X']").attr("disabled", false);
-      buttonObjs.find("input[name='b-/']").attr("disabled", true);
-      player.results.length = 0;
-    }
-  }
-
 }
 
 
@@ -454,7 +419,6 @@ function reset_game() {
  * @param username
  */
 function end_game(username) {
-  console.log("end game");
   var buttonObjs = $("#bowling-calc-buttons-container-" + username);
   
   for (var i = 0; i < 10; i++) {
@@ -560,7 +524,7 @@ function send_results() {
     player.username = usernames[i];
     player.frames = [];
     
-    for(var j = 1; j <= 10; j++) {
+    for(var j = 1; j <= 9; j++) {
       var frame = {};
       frame.throw_1 = frameObjs.find("#edit-frame" + j + "-1").val();
       frame.throw_2 = frameObjs.find("#edit-frame" + j + "-2").val();
@@ -570,12 +534,17 @@ function send_results() {
 
     }
     
+    var frame10 = {};
+    frame10.throw_1 = frameObjs.find("#edit-frame10-1").val();
+    frame10.throw_2 = frameObjs.find("#edit-frame10-2").val();
+    frame10.throw_3 = frameObjs.find("#edit-frame10-3").val();
+    frame10.frame_res = frameObjs.find("input[name='frame10-res']").val();
+    player.frames.push(frame10);
+    
     GameScores.players.push(player);
  
   }
-  
-  console.log(JSON.stringify(GameScores));
-  
+    
   //Make ajax call
   $.ajax({
     type: "POST",
@@ -584,7 +553,7 @@ function send_results() {
     url: "/Exploration/user/game/saveScore",
     data: JSON.stringify(GameScores), 
     success :function(result) {
-      console.log(result);
+//      console.log(result);
       var reportsUrl = window.location.origin + "/Exploration/reports";
       window.location.replace(reportsUrl);
     }

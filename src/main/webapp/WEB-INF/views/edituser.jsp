@@ -48,8 +48,8 @@
               </tr>
               <tr>
                 <td><label for="role">Role: </label></td>
-                <td><form:input type="text" path="role"
-                    id="role" /></td>
+                <td><form:radiobutton path="role" value="ADMIN" />ADMIN 
+                <form:radiobutton path="role" value="USER" />USER</td>
                 <td><form:errors path="role" cssClass="error" /></td>
               </tr>
               <tr>

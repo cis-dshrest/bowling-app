@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <html>
 <head>
@@ -40,13 +41,8 @@
     
       <!--  Help module -->
       <%@include file="help.jsp"%>
-
     </div>
-
   </div>
-
-  <h2>&lt;/body&gt;</h2>
-  
 </body>
 
 </html>

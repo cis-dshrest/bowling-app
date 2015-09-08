@@ -50,8 +50,19 @@
           <td>${user.password}</td>
           <td>${user.role}</td>
           <td>${user.isActive}</td>
-          <td><a onclick="return confirm('Are you sure?');" href="<c:url value='/admin/delete-${user.username}-user' />">
-                <span class="glyphicon glyphicon-trash"></span></a></td>
+          
+          <c:choose>
+            <c:when test="${user.role == 'USER'}">
+              <td><a onclick="return confirm('Are you sure?');" href="<c:url value='/admin/delete-${user.username}-user' />">
+                <span class="glyphicon glyphicon-trash"></span></a>
+              </td>
+            </c:when>
+            <c:otherwise>
+              <td></td>
+            </c:otherwise>
+          </c:choose>
+         
+          
         </tr>
       </c:forEach>
     </table>

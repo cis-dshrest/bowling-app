@@ -93,6 +93,5 @@
 
 
   </div>
-  <h3>&lt;/body&lt;</h3>
 </body>
 </html>

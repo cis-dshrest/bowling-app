@@ -10,10 +10,10 @@
 <!-- CSS -->
 
 <!-- custom css -->
-<link rel="stylesheet" href="<c:url value="/resources/core/css/main.css" />" />
+<link rel="stylesheet" type="text/css" href="<c:url value="/resources/core/css/main.css" />" />
 
 <!-- Bootstrap -->
-<link rel="stylesheet" href="<c:url value="/resources/core/css/bootstrap.min.css" />" />
+<link rel="stylesheet" type="text/css" href="<c:url value="/resources/core/css/bootstrap.min.css" />" />
 <!-- Bootstrap theme -->
 
 

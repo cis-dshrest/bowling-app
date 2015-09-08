@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<style>
+<style type="text/css" scoped>
 nav>ul { list-style-type:none;
     margin: 0;
     padding: 0;

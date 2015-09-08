@@ -1,5 +1,6 @@
 package com.explore.learn.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -47,8 +48,9 @@ public class AdminController {
 		
 		String role = (String) session.getAttribute("role");
 		
+		// List users if the role is admin, otherwise redirect other users.
 		if(role.equalsIgnoreCase("admin")) {
-			//List users
+			
 			List<User> userList = userService.findAllUsers();
 			model.addAttribute("users", userList);
 			return "listUsers";
@@ -61,7 +63,10 @@ public class AdminController {
 	@RequestMapping(value = { "/edit-{username}-user" }, method = RequestMethod.GET)
 	public String editUser(@PathVariable String username, ModelMap model) {
 		User user = userService.findByUsername(username);
-		model.addAttribute("user", user);
+		
+		model.addAttribute("user", user);		
+		initRoleRadioBtns(model);
+		
 		model.addAttribute("breadcrumUsername", user.getUsername());
 		return "edituser";
 	}
@@ -94,4 +99,10 @@ public class AdminController {
 		}
 	}
 	
+	private void initRoleRadioBtns(ModelMap model) {
+		List<String> roleList = new ArrayList<String>();
+		roleList.add("ADMIN");
+		roleList.add("USER");
+		model.addAttribute("roleList", roleList);
+	}
 }
