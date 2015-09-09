@@ -429,6 +429,30 @@ function end_game(username) {
   buttonObjs.find("input[name='b-/']").attr("disabled", true);
   
   
+  //defining indexOf for ie8 because it doesn't have it..
+  //very lame
+  if (!Array.prototype.indexOf)
+  {
+    Array.prototype.indexOf = function(elt /*, from*/)
+    {
+      var len = this.length >>> 0;
+
+      var from = Number(arguments[1]) || 0;
+      from = (from < 0)
+           ? Math.ceil(from)
+           : Math.floor(from);
+      if (from < 0)
+        from += len;
+
+      for (; from < len; from++)
+      {
+        if (from in this &&
+            this[from] === elt)
+          return from;
+      }
+      return -1;
+    };
+  }
   //remove player from ongoing games since their game is over
   var index = stillPlaying.indexOf(username);
   stillPlaying.splice(index, 1);
@@ -554,6 +578,12 @@ function send_results() {
     data: JSON.stringify(GameScores), 
     success :function(result) {
 //      console.log(result);
+      var homeurl = window.location.origin;
+      
+      if(!homeurl) {
+        window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
+      }
+
       var reportsUrl = window.location.origin + "/Exploration/reports";
       window.location.replace(reportsUrl);
     }

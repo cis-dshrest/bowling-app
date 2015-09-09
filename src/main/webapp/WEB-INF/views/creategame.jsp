@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
 <title>Create Game</title>
@@ -66,7 +67,7 @@ function validate() {
       <input class="btn btn-success" type="submit"  value="Play" />
     </form>
     <!-- End new game form -->
-
+    <br><br>
     <!--  Help module -->
     <div id="helpbox">
       <%@include file="help.jsp"%>

@@ -9,18 +9,29 @@ nav>ul { list-style-type:none;
 nav ul>li {
     display: inline;
 }
+
+.navbar-collapse.collapse {
+  display: block!important;
+}
+
+.navbar-nav>li, .navbar-nav {
+  float: left !important;
+}
+
+.navbar-nav.navbar-right:last-child {
+  margin-right: -15px !important;
+}
+
+.navbar-right {
+  float: right!important;
+}
+
 </style>
 
 <!-- static navbar -->
 <nav class="navbar navbar-default navbar-static-top">
 <div class="container">
   <div class="navbar-header">
-    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
     <a class="navbar-brand" href="<%=request.getContextPath()%>">LETS</a>
   </div>
   

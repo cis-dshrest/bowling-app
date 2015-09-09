@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib prefix="sec"
   uri="http://www.springframework.org/security/tags"%>
