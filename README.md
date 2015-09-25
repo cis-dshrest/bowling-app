@@ -50,6 +50,8 @@ The tools used to build the application is given below.
 3. Get [mysql 5.6](http://dev.mysql.com/downloads/mysql/)
 
 4. **Start the mysql server**
+5. **Run the [sql script](https://github.com/private-pilot/exploratory-testing/blob/develop/src/main/resources/sql/createtable.sql) in your mysql server**
+6. 
 
 ####Manually
 ------------
