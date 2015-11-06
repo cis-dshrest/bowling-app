@@ -64,7 +64,12 @@ $ mvn clean install
 $ cp target/Exploration.war {tomcat-directory}/webapps/
 ```
 
-3. Run tomcat
+3. To setup mysql, start the mysql server and run the shell script provided
+```
+$ sh setupdb.sh
+```
+
+4. Run tomcat
 ```
 $ sh {tomcat-directory}/bin/catalina.sh start
 ```
