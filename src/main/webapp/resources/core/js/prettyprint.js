@@ -637,7 +637,6 @@ var prettyPrint = (function(){
                 var miniTable = util.table(['Date',null], 'date'),
                     sDate = date.toString().split(/\s/);
                 
-                /* TODO: Make this work well in IE! */
                 miniTable
                     .addRow(['Time', sDate[4]])
                     .addRow(['Date', sDate.slice(0,4).join('-')]);
