@@ -90,7 +90,7 @@ public class UserController {
 		String username = (String) session.getAttribute("username");
 		
 		User user = userService.findByUsername(username);
-		String realName = user.getFirstName() + "%s " + user.getLastName();		
+		String realName = user.getFirstName() + " " + user.getLastName();		
 		model.addAttribute("realName", realName);
 		model.addAttribute("user", user);
 		return "profile";

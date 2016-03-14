@@ -36,7 +36,7 @@
     </div>
     <form name='loginForm' class='form-signin'
 		  action="/Exploration/user/login" method='POST'>
-      <h2 class="form-signin-heading">Please sing in</h2>
+      <h2 class="form-signin-heading">Please sign in</h2>
       
       <label for="inputUsername" class="sr-only">Username</label>
       <input type="text" class="form-control" name="username" placeholder="Username" required autofocus/>

@@ -109,6 +109,19 @@ public class User {
 		
 		return sb.toString();
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (!(o instanceof User)) return false;
+		
+		User rhs = (User) o;
+		
+		if (rhs.getUsername().equals(this.getUsername())) {
+			return true;
+		}
+		
+		return false;
+	}
 
 
 }

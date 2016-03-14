@@ -1,6 +1,5 @@
 package com.explore.learn.configuration;
 
-import javax.persistence.EntityManager;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;

@@ -14,8 +14,6 @@ Design credit: http://www.sportcalculators.com/bowling-score-calculator
   src='<c:url value="/resources/core/js/bowlingScoreCalculator.js" />'></script>
 <link rel="stylesheet"
   href='<c:url value="/resources/core/css/gameView.css" />' />
-
-
 </head>
 <body>
 
